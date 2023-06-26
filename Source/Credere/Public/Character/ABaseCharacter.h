@@ -7,13 +7,13 @@
 #include "ABaseCharacter.generated.h"
 
 UCLASS()
-class CREDERE_API AABaseCharacter : public ACharacter
+class CREDERE_API ABaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AABaseCharacter();
+	ABaseCharacter();
 
 protected:
 	// Called when the game starts or when spawned
