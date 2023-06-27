@@ -13,5 +13,10 @@ UCLASS()
 class CREDERE_API AWarriorCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
+public:
+	AWarriorCharacter();
+
+private:
+	double SkeletalMeshAdjust = -80.0;
 	
 };
