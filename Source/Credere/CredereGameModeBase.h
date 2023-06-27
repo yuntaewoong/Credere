@@ -13,5 +13,7 @@ UCLASS()
 class CREDERE_API ACredereGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	ACredereGameModeBase(const FObjectInitializer& ObjectInitializer);
 };
