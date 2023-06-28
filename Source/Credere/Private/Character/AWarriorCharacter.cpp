@@ -8,7 +8,7 @@ AWarriorCharacter::AWarriorCharacter()
 {
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MeshAsset(TEXT("SkeletalMesh'/Game/Characters/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 	if (MeshAsset.Succeeded())
-		GetMesh()->SetSkeletalMesh(MeshAsset.Object);//전사 Skeletal 메쉬 로드
+		GetMesh()->SetSkeletalMesh(MeshAsset.Object);
 	else
 		UE_LOG(LogSkeletalMesh, Error, TEXT("Warrior Skeletal Mesh Not Loaded"));
 	GetMesh()->AddRelativeLocation(FVector(0.0, 0.0, SkeletalMeshAdjust));

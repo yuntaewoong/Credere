@@ -10,30 +10,30 @@ ABaseCharacter::ABaseCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;//Tick On
 
-	{//Ä³¸¯ÅÍÀÇ È¸ÀüÀÌ ControllerÀÇ È¸Àü¿¡ ¿µÇâ¹ŞÁö ¾Ê°Ô ¼³Á¤
+	{//ìºë¦­í„°ì˜ íšŒì „ì´ Controllerì˜ íšŒì „ì— ì˜í–¥ë°›ì§€ ì•Šê²Œ ì„¤ì •
 		bUseControllerRotationPitch = false;
 		bUseControllerRotationYaw = false;
 		bUseControllerRotationRoll = false;
 	}
-	{//Character Movement ComponentÆÄ¶ó¹ÌÅÍ ¼³Á¤
-		GetCharacterMovement()->bOrientRotationToMovement = true;//ÀÌµ¿¹æÇâÀ¸·Î È¸ÀüÇÏ°Ô ¼³Á¤	
-		GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f); //È¸Àü °¡¼Óµµ ¼³Á¤
+	{//Character Movement ComponentíŒŒë¼ë¯¸í„° ì„¤ì •
+		GetCharacterMovement()->bOrientRotationToMovement = true;//ì´ë™ë°©í–¥ìœ¼ë¡œ íšŒì „í•˜ê²Œ ì„¤ì •	
+		GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f); //íšŒì „ ê°€ì†ë„ ì„¤ì •
 		GetCharacterMovement()->JumpZVelocity = 700.f;
 		GetCharacterMovement()->AirControl = 0.35f;
 		GetCharacterMovement()->MaxWalkSpeed = 500.f;
 		GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 		GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	}
-	{//CameraBoom¼³Á¤
+	{//CameraBoomì„¤ì •
 		CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 		CameraBoom->SetupAttachment(RootComponent);
 		CameraBoom->TargetArmLength = 400.0f; 
-		CameraBoom->bUsePawnControlRotation = true;//ControllerÀÇ Rotation°ª »ç¿ë
+		CameraBoom->bUsePawnControlRotation = true;//Controllerì˜ Rotationê°’ ì‚¬ìš©
 	}
-	{//FollowCamera¼³Á¤
+	{//FollowCameraì„¤ì •
 		FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 		FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
-		FollowCamera->bUsePawnControlRotation = false;//Camera´Â CameraBoom¿¡ Á¾¼ÓµÇ¹Ç·Î µû·Î È¸Àü x
+		FollowCamera->bUsePawnControlRotation = false;//CameraëŠ” CameraBoomì— ì¢…ì†ë˜ë¯€ë¡œ ë”°ë¡œ íšŒì „ x
 	}
 }
 
