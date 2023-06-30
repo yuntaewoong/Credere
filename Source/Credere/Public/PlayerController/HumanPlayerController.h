@@ -13,5 +13,7 @@ UCLASS()
 class CREDERE_API AHumanPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+public:
+	AHumanPlayerController();	
 	
 };

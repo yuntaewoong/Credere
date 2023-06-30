@@ -17,6 +17,7 @@ public:
 	AWarriorCharacter();
 
 private:
-	double SkeletalMeshAdjust = -80.0;
+	double SkeletalMeshZAdjust = -80.0;
+	double SkeletalMeshPitchAdjust = -90.0;
 	
 };

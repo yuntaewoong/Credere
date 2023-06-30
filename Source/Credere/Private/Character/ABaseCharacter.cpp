@@ -39,7 +39,7 @@ ABaseCharacter::ABaseCharacter()
 		else
 			UE_LOG(LogActor, Error, TEXT("Move Action Not Loaded"));
 
-		static ConstructorHelpers::FObjectFinder<UInputAction> lookAction(TEXT("InputAction'/Game/Inputs/InputActions/IA_Move.IA_Move'"));
+		static ConstructorHelpers::FObjectFinder<UInputAction> lookAction(TEXT("InputAction'/Game/Inputs/InputActions/IA_Look.IA_Look'"));
 		if (lookAction.Succeeded())
 			LookAction = lookAction.Object;
 		else
@@ -142,5 +142,6 @@ void ABaseCharacter::Look(const FInputActionValue& Value)
 	}
 	AddControllerYawInput(lookAxisVector.X);
 	AddControllerPitchInput(lookAxisVector.Y);
+	UE_LOG(LogTemp,Warning,TEXT("Look %f, %f"),lookAxisVector.X,lookAxisVector.Y);
 }
 

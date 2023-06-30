@@ -3,3 +3,7 @@
 
 #include "PlayerController/HumanPlayerController.h"
 
+AHumanPlayerController::AHumanPlayerController()
+{
+	
+}
