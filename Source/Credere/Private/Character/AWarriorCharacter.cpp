@@ -6,7 +6,7 @@
 AWarriorCharacter::AWarriorCharacter()
 	: Super::ABaseCharacter()
 {
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MeshAsset(TEXT("SkeletalMesh'/Game/Characters/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MeshAsset(TEXT("SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 	if (MeshAsset.Succeeded())
 		GetMesh()->SetSkeletalMesh(MeshAsset.Object);
 	else
