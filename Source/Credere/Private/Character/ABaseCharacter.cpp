@@ -142,6 +142,5 @@ void ABaseCharacter::Look(const FInputActionValue& Value)
 	}
 	AddControllerYawInput(lookAxisVector.X);
 	AddControllerPitchInput(lookAxisVector.Y);
-	UE_LOG(LogTemp,Warning,TEXT("Look %f, %f"),lookAxisVector.X,lookAxisVector.Y);
 }
 
