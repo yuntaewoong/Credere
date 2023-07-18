@@ -8,13 +8,13 @@
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class CREDERE_API UUNavigationComponent : public UActorComponent
+class CREDERE_API UNavigationComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UUNavigationComponent();
+	UNavigationComponent();
 
 protected:
 	// Called when the game starts

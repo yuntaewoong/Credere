@@ -2,10 +2,19 @@
 
 
 #include "Character/AWarriorCharacter.h"
+#include "Navigation/UNavigationComponent.h"
 
 AWarriorCharacter::AWarriorCharacter()
-	: Super::ABaseCharacter()
+	: 
+	Super::ABaseCharacter(),
+	Navigation(nullptr),
+	SkeletalMeshZAdjust(0.0),
+	SkeletalMeshPitchAdjust(0.0)
 {
+	//Navigation Component 
+	Navigation = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
+	
+
 	//SkeletalMesh로딩
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMesh(TEXT("SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 	if (skeletalMesh.Succeeded())

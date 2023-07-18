@@ -17,6 +17,9 @@ public:
 	AWarriorCharacter();
 
 private:
+	UPROPERTY(VisibleAnywhere)
+	class UNavigationComponent* Navigation;
+
 	double SkeletalMeshZAdjust = -80.0;
 	double SkeletalMeshPitchAdjust = -90.0;
 	
