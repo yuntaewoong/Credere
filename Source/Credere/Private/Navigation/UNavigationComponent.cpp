@@ -2,33 +2,41 @@
 
 
 #include "Navigation\UNavigationComponent.h"
+#include "Runtime/NavigationSystem/Public/NavigationSystem.h"
+#include "Runtime/NavigationSystem/Public/NavigationPath.h"
 
-// Sets default values for this component's properties
 UNavigationComponent::UNavigationComponent()
+	:
+	EndPoint(FVector::Zero())
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
-
-
-// Called when the game starts
 void UNavigationComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
-
-// Called every frame
 void UNavigationComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	UNavigationSystemV1* navSys = UNavigationSystemV1::GetCurrent(GetWorld());
+	UNavigationPath* path = navSys->FindPathToLocationSynchronously(
+		GetWorld(),
+		GetOwner()->GetActorLocation(),
+		FVector::Zero(),
+		NULL
+	);
+	UE_LOG(LogTemp,Log,TEXT("%s"),*path->GetDebugString());
+	for(int i= 0;i<path->PathPoints.Num();i++)
+	{
+		UE_LOG(LogTemp,Log,TEXT("PathPoint %d %s"),i,*path->PathPoints[i].ToString());
+	}
+	
+}
+
+void UNavigationComponent::SetEndPoint(FVector endPoint)
+{
+	EndPoint = endPoint;
 }
 

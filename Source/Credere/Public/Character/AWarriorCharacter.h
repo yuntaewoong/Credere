@@ -15,12 +15,13 @@ class CREDERE_API AWarriorCharacter : public ABaseCharacter
 	GENERATED_BODY()
 public:
 	AWarriorCharacter();
-
+	virtual void Tick(float DeltaTime) override;
+	
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UNavigationComponent* Navigation;
 
-	double SkeletalMeshZAdjust = -80.0;
-	double SkeletalMeshPitchAdjust = -90.0;
+	double SkeletalMeshZAdjust;
+	double SkeletalMeshPitchAdjust;
 	
 };
