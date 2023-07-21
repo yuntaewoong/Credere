@@ -8,7 +8,7 @@
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class CREDERE_API UNavigationComponent : public UActorComponent
+class CREDERE_API UNavigationComponent : public USceneComponent
 {
 	GENERATED_BODY()
 
@@ -20,9 +20,18 @@ protected:
 
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void SetEndPoint(FVector endPoint);
+	void SetGoal(FVector goal);
 
 private:
-	FVector EndPoint;
+	UPROPERTY(VisibleAnywhere)
+	class USplineComponent* RouteSpline;
+
+	UPROPERTY(VisibleAnywhere)
+	TArray<class USplineMeshComponent*> RouteSplineMeshes;
+
+	FVector GoalLocation;
+
+	uint16 MaxNumOfSplinePoints;
+
 		
 };

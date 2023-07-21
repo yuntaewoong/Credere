@@ -4,12 +4,30 @@
 #include "Navigation\UNavigationComponent.h"
 #include "Runtime/NavigationSystem/Public/NavigationSystem.h"
 #include "Runtime/NavigationSystem/Public/NavigationPath.h"
+#include "Components/SplineComponent.h"
+#include "Components/SplineMeshComponent.h"
+
 
 UNavigationComponent::UNavigationComponent()
 	:
-	EndPoint(FVector::Zero())
+	GoalLocation(FVector::Zero()),
+	RouteSpline(nullptr),
+	RouteSplineMeshes(TArray<USplineMeshComponent*>()),
+	MaxNumOfSplinePoints(5u)
 {
 	PrimaryComponentTick.bCanEverTick = true;
+	{//Route Spline 생성
+		RouteSpline = CreateDefaultSubobject<USplineComponent>(TEXT("Route Spline"));
+		RouteSpline->SetupAttachment(this);
+	}
+	{//Route Spline Mesh 생성
+		RouteSplineMeshes.Reserve(MaxNumOfSplinePoints);
+		for(uint16 i = 0;i<MaxNumOfSplinePoints;i++)
+		{
+			RouteSplineMeshes.Add(CreateDefaultSubobject<USplineMeshComponent>((*FString("Name" + FString::FromInt(i)))));
+			RouteSplineMeshes[i]->SetupAttachment(RouteSpline);
+		}
+	}
 }
 void UNavigationComponent::BeginPlay()
 {
@@ -35,8 +53,8 @@ void UNavigationComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	
 }
 
-void UNavigationComponent::SetEndPoint(FVector endPoint)
+void UNavigationComponent::SetGoal(FVector goal)
 {
-	EndPoint = endPoint;
+	GoalLocation = goal;
 }
 

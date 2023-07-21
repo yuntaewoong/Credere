@@ -13,7 +13,7 @@ AWarriorCharacter::AWarriorCharacter()
 {
 	//Navigation Component 
 	Navigation = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
-	
+	Navigation->SetupAttachment(RootComponent);
 
 	//SkeletalMesh로딩
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMesh(TEXT("SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
@@ -38,5 +38,5 @@ AWarriorCharacter::AWarriorCharacter()
 void AWarriorCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Navigation->SetEndPoint(FVector(10000.0,0.0,0.0));
+	Navigation->SetGoal(FVector(10000.0,0.0,0.0));
 }
