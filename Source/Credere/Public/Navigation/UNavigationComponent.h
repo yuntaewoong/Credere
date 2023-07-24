@@ -26,12 +26,13 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class USplineComponent* RouteSpline;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY()
 	TArray<class USplineMeshComponent*> RouteSplineMeshes;
 
 	FVector GoalLocation;
-
 	uint16 MaxNumOfSplinePoints;
+private:
+	void UpdateSplineMeshes();
 
 		
 };

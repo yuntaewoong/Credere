@@ -20,26 +20,26 @@ ABaseCharacter::ABaseCharacter()
 	LookAction(nullptr)
 {
 	{//mapping context 로드
-		static ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));
+		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));
 		if (mappingContext.Succeeded())
 			DefaultMappingContext = mappingContext.Object;
 		else
 			UE_LOG(LogActor, Error, TEXT("Player MappingContext Not Loaded"));
 	}
 	{//input action들 로드
-		static ConstructorHelpers::FObjectFinder<UInputAction> jumpAction(TEXT("InputAction'/Game/Inputs/InputActions/IA_Jump.IA_Jump'"));
+		static const ConstructorHelpers::FObjectFinder<UInputAction> jumpAction(TEXT("InputAction'/Game/Inputs/InputActions/IA_Jump.IA_Jump'"));
 		if (jumpAction.Succeeded())
 			JumpAction = jumpAction.Object;
 		else
 			UE_LOG(LogActor, Error, TEXT("Jump Action Not Loaded"));
 
-		static ConstructorHelpers::FObjectFinder<UInputAction> moveAction(TEXT("InputAction'/Game/Inputs/InputActions/IA_Move.IA_Move'"));
+		static const ConstructorHelpers::FObjectFinder<UInputAction> moveAction(TEXT("InputAction'/Game/Inputs/InputActions/IA_Move.IA_Move'"));
 		if (moveAction.Succeeded())
 			MoveAction = moveAction.Object;
 		else
 			UE_LOG(LogActor, Error, TEXT("Move Action Not Loaded"));
 
-		static ConstructorHelpers::FObjectFinder<UInputAction> lookAction(TEXT("InputAction'/Game/Inputs/InputActions/IA_Look.IA_Look'"));
+		static const ConstructorHelpers::FObjectFinder<UInputAction> lookAction(TEXT("InputAction'/Game/Inputs/InputActions/IA_Look.IA_Look'"));
 		if (lookAction.Succeeded())
 			LookAction = lookAction.Object;
 		else

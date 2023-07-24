@@ -16,7 +16,7 @@ AWarriorCharacter::AWarriorCharacter()
 	Navigation->SetupAttachment(RootComponent);
 
 	//SkeletalMesh로딩
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMesh(TEXT("SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
+	static const ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMesh(TEXT("SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
 	if (skeletalMesh.Succeeded())
 		GetMesh()->SetSkeletalMesh(skeletalMesh.Object);
 	else
