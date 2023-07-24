@@ -13,7 +13,9 @@ UNavigationComponent::UNavigationComponent()
 	GoalLocation(FVector::Zero()),
 	RouteSpline(nullptr),
 	RouteSplineMeshes(TArray<USplineMeshComponent*>()),
-	MaxNumOfSplinePoints(15u)
+	MaxNumOfSplinePoints(15u),
+	SplineMeshTickness(0.4),
+	RouteZHeight(40.0)
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
@@ -32,6 +34,9 @@ UNavigationComponent::UNavigationComponent()
 		{
 			RouteSplineMeshes.Add(CreateDefaultSubobject<USplineMeshComponent>((*FString(TEXT("Spline Mesh") + FString::FromInt(i)))));
 			RouteSplineMeshes[i]->SetStaticMesh(splineStaticMesh.Object);
+			RouteSplineMeshes[i]->SetForwardAxis(ESplineMeshAxis::Z);
+			RouteSplineMeshes[i]->SetStartScale(FVector2D(SplineMeshTickness,SplineMeshTickness));
+			RouteSplineMeshes[i]->SetEndScale(FVector2D(SplineMeshTickness,SplineMeshTickness));
 		}
 	}
 }
@@ -44,8 +49,6 @@ void UNavigationComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	UpdateSplineMeshes();
-	
-	
 }
 
 void UNavigationComponent::SetGoal(FVector goal)
@@ -68,7 +71,7 @@ void UNavigationComponent::UpdateSplineMeshes()
 		RouteSpline->ClearSplinePoints();
 		for(uint8 i = 0;i<path->PathPoints.Num();i++)
 		{
-			RouteSpline->AddSplinePoint(path->PathPoints[i],ESplineCoordinateSpace::World);
+			RouteSpline->AddSplinePoint(path->PathPoints[i] + FVector(0.0,0.0,RouteZHeight),ESplineCoordinateSpace::World);
 		}
 	}
 	{//업데이트된 Spline정보로 Spline Mesh구성
@@ -90,7 +93,16 @@ void UNavigationComponent::UpdateSplineMeshes()
 				splineEndPointTangent,
 				true
 			);
-
+		}
+		for(uint8 i = RouteSpline->GetNumberOfSplineSegments();i<MaxNumOfSplinePoints-1;i++)
+		{//쓰이지 않는 Spline Mesh는 안보이게 처리
+			RouteSplineMeshes[i]->SetStartAndEnd(
+				GetOwner()->GetActorLocation(),
+				FVector::Zero(),
+				GetOwner()->GetActorLocation(),
+				FVector::Zero(),
+				true
+			);
 		}
 	}
 }

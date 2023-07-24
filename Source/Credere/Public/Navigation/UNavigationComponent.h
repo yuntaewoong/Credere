@@ -31,6 +31,8 @@ private:
 
 	FVector GoalLocation;
 	uint16 MaxNumOfSplinePoints;
+	double SplineMeshTickness;
+	double RouteZHeight;
 private:
 	void UpdateSplineMeshes();
 
