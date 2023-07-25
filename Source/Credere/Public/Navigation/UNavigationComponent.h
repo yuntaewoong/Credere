@@ -26,7 +26,7 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class USplineComponent* RouteSpline;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TArray<class USplineMeshComponent*> RouteSplineMeshes;
 
 	FVector GoalLocation;

@@ -28,12 +28,16 @@ UNavigationComponent::UNavigationComponent()
 		static const ConstructorHelpers::FObjectFinder<UStaticMesh> splineStaticMesh(TEXT("StaticMesh'/Engine/BasicShapes/Cylinder.Cylinder'"));
 		if (!splineStaticMesh.Succeeded())
 			UE_LOG(LogActor, Error, TEXT("Cylinder Mesh Not Loaded"));
+		static const ConstructorHelpers::FObjectFinder<UMaterialInterface> splineMeshMaterial(TEXT("Material'/Game/Materials/RouteMaterial.RouteMaterial'"));
+		if (!splineMeshMaterial.Succeeded())
+			UE_LOG(LogActor, Error, TEXT("Route Material Not Loaded"));
 
 		RouteSplineMeshes.Reserve(MaxNumOfSplinePoints);
 		for(uint16 i = 0;i<MaxNumOfSplinePoints;i++)
 		{
 			RouteSplineMeshes.Add(CreateDefaultSubobject<USplineMeshComponent>((*FString(TEXT("Spline Mesh") + FString::FromInt(i)))));
 			RouteSplineMeshes[i]->SetStaticMesh(splineStaticMesh.Object);
+			RouteSplineMeshes[i]->SetMaterial(0,splineMeshMaterial.Object);
 			RouteSplineMeshes[i]->SetForwardAxis(ESplineMeshAxis::Z);
 			RouteSplineMeshes[i]->SetStartScale(FVector2D(SplineMeshTickness,SplineMeshTickness));
 			RouteSplineMeshes[i]->SetEndScale(FVector2D(SplineMeshTickness,SplineMeshTickness));
@@ -66,7 +70,7 @@ void UNavigationComponent::UpdateSplineMeshes()
 		GoalLocation,
 		NULL
 	);
-	UE_LOG(LogTemp,Log,TEXT("%s"),*path->GetDebugString());
+	//UE_LOG(LogTemp,Log,TEXT("%s"),*path->GetDebugString());
 	{//Spline 초기화 후 path정보에 따라 새로 업데이트
 		RouteSpline->ClearSplinePoints();
 		for(uint8 i = 0;i<path->PathPoints.Num();i++)
