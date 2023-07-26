@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Character/ABaseCharacter.h"
-#include "ArcherCharacter.generated.h"
+#include "AArcherCharacter.generated.h"
 
 /**
  * 

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Character/ABaseCharacter.h"
-#include "SummonerCharacter.generated.h"
+#include "ASummonerCharacter.generated.h"
 
 /**
  * 
