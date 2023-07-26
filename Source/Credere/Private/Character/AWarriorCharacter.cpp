@@ -22,7 +22,7 @@ AWarriorCharacter::AWarriorCharacter()
 	GetMesh()->SetSkeletalMesh(skeletalMesh.Object);
 	
 	//Animation Blueprint로딩
-	static const ConstructorHelpers::FObjectFinder<UAnimBlueprint> animationBlueprint(TEXT("AnimBlueprint'/Game/Blueprints/AnimationBlueprints/WarriorAnimationBP.WarriorAnimationBP'"));
+	static const ConstructorHelpers::FObjectFinder<UAnimBlueprint> animationBlueprint(TEXT("AnimBlueprint'/Game/ParagonGreystone/Characters/Heroes/Greystone/Greystone_AnimBlueprint.Greystone_AnimBlueprint'"));
 	if (!animationBlueprint.Succeeded())
 		UE_LOG(LogSkeletalMesh, Error, TEXT("Warrior AnimBP Not Loaded"));
 	GetMesh()->SetAnimInstanceClass(animationBlueprint.Object->GeneratedClass);
