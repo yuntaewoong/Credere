@@ -9,7 +9,7 @@ AWarriorCharacter::AWarriorCharacter()
 	Super::ABaseCharacter(),
 	Navigation(nullptr),
 	SkeletalMeshZAdjust(-80.0),
-	SkeletalMeshPitchAdjust(-90.0)
+	SkeletalMeshYawAdjust(-90.0)
 {
 	//Navigation Component 
 	Navigation = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
@@ -28,7 +28,7 @@ AWarriorCharacter::AWarriorCharacter()
 	GetMesh()->SetAnimInstanceClass(animationBlueprint.Object->GeneratedClass);
 
 	GetMesh()->AddRelativeLocation(FVector(0.0, 0.0, SkeletalMeshZAdjust));
-	GetMesh()->AddRelativeRotation(FQuat(FRotator(0.0,SkeletalMeshPitchAdjust,0.0)));
+	GetMesh()->AddRelativeRotation(FQuat(FRotator(0.0,SkeletalMeshYawAdjust,0.0)));
 
 	
 }

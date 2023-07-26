@@ -22,6 +22,6 @@ private:
 	class UNavigationComponent* Navigation;
 
 	double SkeletalMeshZAdjust;
-	double SkeletalMeshPitchAdjust;
+	double SkeletalMeshYawAdjust;
 	
 };

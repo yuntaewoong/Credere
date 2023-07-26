@@ -18,4 +18,7 @@ public:
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+private:
+	double SkeletalMeshZAdjust;
+	double SkeletalMeshYawAdjust;
 };

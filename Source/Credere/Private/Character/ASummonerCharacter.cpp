@@ -5,7 +5,9 @@
 
 ASummonerCharacter::ASummonerCharacter()
 	:
-	Super::ABaseCharacter()
+	Super::ABaseCharacter(),
+	SkeletalMeshZAdjust(-80.0),
+	SkeletalMeshYawAdjust(-90.0)
 {
 	//SkeletalMesh로딩
 	static const ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMesh(TEXT("SkeletalMesh'/Game/ParagonShinbi/Characters/Heroes/Shinbi/Meshes/Shinbi.Shinbi'"));
@@ -13,7 +15,8 @@ ASummonerCharacter::ASummonerCharacter()
 		UE_LOG(LogSkeletalMesh, Error, TEXT("Summoner Skeletal Mesh Not Loaded"));
 	GetMesh()->SetSkeletalMesh(skeletalMesh.Object);
 		
-	
+	GetMesh()->AddRelativeLocation(FVector(0.0, 0.0, SkeletalMeshZAdjust));
+	GetMesh()->AddRelativeRotation(FQuat(FRotator(0.0,SkeletalMeshYawAdjust,0.0)));
 }
 
 void ASummonerCharacter::BeginPlay()
