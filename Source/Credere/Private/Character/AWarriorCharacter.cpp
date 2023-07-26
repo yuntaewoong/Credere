@@ -17,18 +17,16 @@ AWarriorCharacter::AWarriorCharacter()
 
 	//SkeletalMesh로딩
 	static const ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMesh(TEXT("SkeletalMesh'/Game/ParagonGreystone/Characters/Heroes/Greystone/Meshes/Greystone.Greystone'"));
-	if (skeletalMesh.Succeeded())
-		GetMesh()->SetSkeletalMesh(skeletalMesh.Object);
-	else
+	if (!skeletalMesh.Succeeded())
 		UE_LOG(LogSkeletalMesh, Error, TEXT("Warrior Skeletal Mesh Not Loaded"));
-
+	GetMesh()->SetSkeletalMesh(skeletalMesh.Object);
+	
 	//Animation Blueprint로딩
 	static const ConstructorHelpers::FObjectFinder<UAnimBlueprint> animationBlueprint(TEXT("AnimBlueprint'/Game/Blueprints/AnimationBlueprints/WarriorAnimationBP.WarriorAnimationBP'"));
-	if (animationBlueprint.Succeeded())
-		GetMesh()->SetAnimInstanceClass(animationBlueprint.Object->GeneratedClass);
-	else
+	if (!animationBlueprint.Succeeded())
 		UE_LOG(LogSkeletalMesh, Error, TEXT("Warrior AnimBP Not Loaded"));
-	
+	GetMesh()->SetAnimInstanceClass(animationBlueprint.Object->GeneratedClass);
+
 	GetMesh()->AddRelativeLocation(FVector(0.0, 0.0, SkeletalMeshZAdjust));
 	GetMesh()->AddRelativeRotation(FQuat(FRotator(0.0,SkeletalMeshPitchAdjust,0.0)));
 

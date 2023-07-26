@@ -16,4 +16,8 @@ class CREDERE_API ACredereGameModeBase : public AGameModeBase
 
 public:
 	ACredereGameModeBase(const FObjectInitializer& ObjectInitializer);
+
+	virtual void BeginPlay() override;
+private:
+	double spawnDistanceBetweenCharacters;
 };

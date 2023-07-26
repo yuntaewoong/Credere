@@ -13,5 +13,9 @@ UCLASS()
 class CREDERE_API ASummonerCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
-	
+public:
+	ASummonerCharacter();
+
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 };

@@ -13,5 +13,10 @@ UCLASS()
 class CREDERE_API AArcherCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
+public:
+	AArcherCharacter();
+
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 	
 };
