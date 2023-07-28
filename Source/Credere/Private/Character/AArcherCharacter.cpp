@@ -4,6 +4,7 @@
 #include "Character/AArcherCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+
 AArcherCharacter::AArcherCharacter()
 	:
 	Super::ABaseCharacter(),
@@ -24,6 +25,9 @@ AArcherCharacter::AArcherCharacter()
 
 	GetMesh()->AddRelativeLocation(FVector(0.0, 0.0, SkeletalMeshZAdjust));
 	GetMesh()->AddRelativeRotation(FQuat(FRotator(0.0,SkeletalMeshYawAdjust,0.0)));
+
+
+	
 }
 
 void AArcherCharacter::BeginPlay()

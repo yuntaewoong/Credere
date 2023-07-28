@@ -8,6 +8,7 @@
 #include "InputMappingContext.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Controller\APartnerAIController.h"
 
 ABaseCharacter::ABaseCharacter()
 	:   
@@ -71,6 +72,10 @@ ABaseCharacter::ABaseCharacter()
 		FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 		FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 		FollowCamera->bUsePawnControlRotation = false;//Camera는 CameraBoom에 종속되므로 따로 회전 x
+	}
+	{//AI Controller설정
+		AIControllerClass = APartnerAIController::StaticClass();
+		AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	}
 }
 
