@@ -15,7 +15,9 @@ public class Credere : ModuleRules
 				"Engine",
 				"InputCore",
 				"EnhancedInput",
-                "NavigationSystem"
+                "NavigationSystem",
+                "AIModule",
+                "GameplayTasks"
             }
 		);
 

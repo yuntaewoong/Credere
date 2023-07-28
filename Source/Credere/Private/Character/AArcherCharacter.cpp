@@ -32,7 +32,6 @@ AArcherCharacter::AArcherCharacter()
 
 void AArcherCharacter::BeginPlay()
 {
-	SpawnDefaultController();
 	Super::BeginPlay();
 	
 }

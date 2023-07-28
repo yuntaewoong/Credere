@@ -13,5 +13,16 @@ UCLASS()
 class CREDERE_API APartnerAIController : public AAIController
 {
 	GENERATED_BODY()
+
+public:
+	APartnerAIController();
 	
+	virtual void OnPossess(APawn* InPawn) override;
+	void RunAI();
+private:
+	UPROPERTY(VisibleAnywhere)
+	class UBehaviorTree* PartnerBT;
+
+	UPROPERTY(VisibleAnywhere)
+	class UBlackboardData* PartnerBB;
 };

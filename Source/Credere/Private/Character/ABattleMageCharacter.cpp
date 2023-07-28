@@ -27,7 +27,6 @@ ABattleMageCharacter::ABattleMageCharacter()
 
 void ABattleMageCharacter::BeginPlay()
 {	
-	SpawnDefaultController();
 	Super::BeginPlay();
 	
 }

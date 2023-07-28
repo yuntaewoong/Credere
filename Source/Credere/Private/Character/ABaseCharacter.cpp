@@ -55,9 +55,10 @@ ABaseCharacter::ABaseCharacter()
 	}
 	{//Character Movement Component파라미터 설정
 		GetCharacterMovement()->bOrientRotationToMovement = true;//이동방향으로 회전하게 설정	
-		GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f); //회전 가속도 설정
+		GetCharacterMovement()->RotationRate = FRotator(0.0f, 300.0f, 0.0f); //회전 가속도 설정
 		GetCharacterMovement()->JumpZVelocity = 700.f;
 		GetCharacterMovement()->AirControl = 0.35f;
+		GetCharacterMovement()->GravityScale = 2.0f;
 		GetCharacterMovement()->MaxWalkSpeed = 500.f;
 		GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 		GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
