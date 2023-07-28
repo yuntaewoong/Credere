@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Character/ABaseCharacter.h"
-#include "ASummonerCharacter.generated.h"
+#include "ABattleMageCharacter.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CREDERE_API ASummonerCharacter : public ABaseCharacter
+class CREDERE_API ABattleMageCharacter : public ABaseCharacter
 {
 	GENERATED_BODY()
 public:
-	ASummonerCharacter();
+	ABattleMageCharacter();
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;

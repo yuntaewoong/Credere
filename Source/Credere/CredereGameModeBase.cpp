@@ -4,7 +4,7 @@
 #include "CredereGameModeBase.h"
 #include "Character\AWarriorCharacter.h"
 #include "Character\AArcherCharacter.h"
-#include "Character\ASummonerCharacter.h"
+#include "Character\ABattleMageCharacter.h"
 #include "PlayerController\HumanPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -31,7 +31,7 @@ void ACredereGameModeBase::BeginPlay()
 				defaultWarriorCharacter->GetActorLocation() + actorLeftVector * spawnDistanceBetweenCharacters,
 				defaultWarriorCharacter->GetActorRotation()
 			);//궁수 스폰
-			GetWorld()->SpawnActor<ASummonerCharacter>(
+			GetWorld()->SpawnActor<ABattleMageCharacter>(
 				defaultWarriorCharacter->GetActorLocation() + actorRightVector * spawnDistanceBetweenCharacters,
 				defaultWarriorCharacter->GetActorRotation()
 			);//소환사 스폰
