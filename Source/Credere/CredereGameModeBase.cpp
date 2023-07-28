@@ -5,7 +5,7 @@
 #include "Character\AWarriorCharacter.h"
 #include "Character\AArcherCharacter.h"
 #include "Character\ABattleMageCharacter.h"
-#include "PlayerController\HumanPlayerController.h"
+#include "Controller\AHumanPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 
 ACredereGameModeBase::ACredereGameModeBase(const FObjectInitializer& ObjectInitializer)

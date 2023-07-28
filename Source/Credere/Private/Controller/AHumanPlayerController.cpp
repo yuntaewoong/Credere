@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PlayerController/HumanPlayerController.h"
+#include "Controller/AHumanPlayerController.h"
 
 AHumanPlayerController::AHumanPlayerController()
 {
