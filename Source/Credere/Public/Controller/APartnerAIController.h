@@ -17,12 +17,16 @@ class CREDERE_API APartnerAIController : public AAIController
 public:
 	APartnerAIController();
 	
+	virtual void Tick(float DeltaTime) override;
 	virtual void OnPossess(APawn* InPawn) override;
-	void RunAI();
+	void RunAI(APawn* InPawn);
 private:
+	static const FName GoalKey;
+
 	UPROPERTY(VisibleAnywhere)
 	class UBehaviorTree* PartnerBT;
 
 	UPROPERTY(VisibleAnywhere)
 	class UBlackboardData* PartnerBB;
+	
 };

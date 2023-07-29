@@ -23,18 +23,20 @@ void ACredereGameModeBase::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABaseCharacter::StaticClass(), FoundActors);
 	for(auto iter : FoundActors)
 	{//모든 BaseCharacter탐색
-		if(AWarriorCharacter* defaultWarriorCharacter = Cast<AWarriorCharacter>(iter))
+		if(const AWarriorCharacter* defaultWarriorCharacter = Cast<AWarriorCharacter>(iter))
 		{//기본 캐릭터 발견 시
 			FVector actorLeftVector = defaultWarriorCharacter->GetActorRightVector() * (-1);
 			FVector actorRightVector = defaultWarriorCharacter->GetActorRightVector();
-			GetWorld()->SpawnActor<AArcherCharacter>(
+			AArcherCharacter* archerCharacter = GetWorld()->SpawnActor<AArcherCharacter>(
 				defaultWarriorCharacter->GetActorLocation() + actorLeftVector * spawnDistanceBetweenCharacters,
 				defaultWarriorCharacter->GetActorRotation()
 			);//궁수 스폰
-			GetWorld()->SpawnActor<ABattleMageCharacter>(
+			archerCharacter->SetLeaderCharacter(*defaultWarriorCharacter);
+			ABattleMageCharacter* battleMageCharacter = GetWorld()->SpawnActor<ABattleMageCharacter>(
 				defaultWarriorCharacter->GetActorLocation() + actorRightVector * spawnDistanceBetweenCharacters,
 				defaultWarriorCharacter->GetActorRotation()
-			);//소환사 스폰
+			);//배틀메이지 스폰
+			battleMageCharacter->SetLeaderCharacter(*defaultWarriorCharacter);
 		}
 	}
 

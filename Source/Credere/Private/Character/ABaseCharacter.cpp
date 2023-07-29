@@ -18,7 +18,8 @@ ABaseCharacter::ABaseCharacter()
 	DefaultMappingContext(nullptr),
 	JumpAction(nullptr),
 	MoveAction(nullptr),
-	LookAction(nullptr)
+	LookAction(nullptr),
+	LeaderCharacter(nullptr)
 {
 	{//mapping context 로드
 		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));
@@ -86,7 +87,7 @@ void ABaseCharacter::BeginPlay()
 	APlayerController* playerController = Cast<APlayerController>(Controller);
 	if (!playerController)
 	{
-		UE_LOG(LogActor,Error,TEXT("Player Controller Not Setted"));
+		UE_LOG(LogActor,Warning,TEXT("Human Player Controller Not Setted"));
 		return;
 	}
 	UEnhancedInputLocalPlayerSubsystem* subsystem = 
@@ -120,6 +121,16 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	enhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 	enhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABaseCharacter::Move);
 	enhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABaseCharacter::Look);
+}
+
+const ABaseCharacter& ABaseCharacter::GetLeaderCharacter() const 
+{
+	return *LeaderCharacter;
+}
+
+void ABaseCharacter::SetLeaderCharacter(const ABaseCharacter& Leader)
+{
+	LeaderCharacter = &Leader;
 }
 
 void ABaseCharacter::Move(const FInputActionValue& Value)

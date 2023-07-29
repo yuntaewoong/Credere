@@ -2,9 +2,13 @@
 
 
 #include "Controller/APartnerAIController.h"
+#include "Character\ABaseCharacter.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
+
+
+const FName APartnerAIController::GoalKey(TEXT("Goal"));
 
 APartnerAIController::APartnerAIController()
 	:
@@ -26,19 +30,32 @@ APartnerAIController::APartnerAIController()
 	
 }
 
+void APartnerAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	const ABaseCharacter* ownerCharacter = Cast<ABaseCharacter>(GetPawn());
+	if(ownerCharacter)
+	{//리더 캐릭터를 목적지로 설정
+		const FVector leaderLocation = ownerCharacter->GetLeaderCharacter().GetActorLocation();
+		const FVector leaderForwardVector = ownerCharacter->GetLeaderCharacter().GetActorForwardVector();
+		Blackboard->SetValueAsVector(GoalKey, leaderLocation - leaderForwardVector * 100);
+	}
+}
+
 void APartnerAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
-	UE_LOG(LogController,Warning,TEXT("APartnerPlayerController OnPossess Called"));
-	RunAI();
+	RunAI(InPawn);
 }
 
-void APartnerAIController::RunAI()
+void APartnerAIController::RunAI(APawn* InPawn)
 {
-	UE_LOG(LogController,Warning,TEXT("Called RunAI"));
 	UBlackboardComponent* bbComp = Blackboard;
 	if (UseBlackboard(PartnerBB,bbComp))
 	{
-		RunBehaviorTree(PartnerBT);
+		if(!RunBehaviorTree(PartnerBT))
+		{
+			UE_LOG(LogController,Error,TEXT("RunBehaviorTree Not Called"));
+		}
 	}
 }
