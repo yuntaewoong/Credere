@@ -6,6 +6,8 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"
 
 
 const FName APartnerAIController::GoalKey(TEXT("Goal"));
@@ -33,11 +35,20 @@ APartnerAIController::APartnerAIController()
 void APartnerAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	FVector leaderLocation = FVector::Zero();
+	FVector leaderForwardVector = FVector::Zero();
+	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
+	{
+		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 
+			gameInstance->GetSubsystem<UPlayableCharacterSubsystem>())
+		{//GameInstance의  PlayableCharacterSubsystem에서 리더정보 Get
+			leaderLocation = playableCharacterSubsystem->GetLeader().GetActorLocation();
+			leaderForwardVector = playableCharacterSubsystem->GetLeader().GetActorForwardVector();
+		}
+	}
 	const ABaseCharacter* ownerCharacter = Cast<ABaseCharacter>(GetPawn());
 	if(ownerCharacter)
 	{//리더 캐릭터를 목적지로 설정
-		const FVector leaderLocation = ownerCharacter->GetLeaderCharacter().GetActorLocation();
-		const FVector leaderForwardVector = ownerCharacter->GetLeaderCharacter().GetActorForwardVector();
 		Blackboard->SetValueAsVector(GoalKey, leaderLocation - leaderForwardVector * 100);
 	}
 }

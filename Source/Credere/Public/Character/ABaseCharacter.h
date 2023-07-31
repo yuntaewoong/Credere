@@ -20,8 +20,6 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	const ABaseCharacter& GetLeaderCharacter() const;
-	void SetLeaderCharacter(const ABaseCharacter& Leader);
 	
 private:
 	void Move(const FInputActionValue& Value);
@@ -44,6 +42,4 @@ private:
 
 	UPROPERTY()
 	class UInputAction* LookAction;
-
-	const class ABaseCharacter* LeaderCharacter;
 };

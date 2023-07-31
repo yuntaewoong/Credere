@@ -8,6 +8,8 @@
 #include "InputMappingContext.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"
 #include "Controller\APartnerAIController.h"
 
 ABaseCharacter::ABaseCharacter()
@@ -18,8 +20,7 @@ ABaseCharacter::ABaseCharacter()
 	DefaultMappingContext(nullptr),
 	JumpAction(nullptr),
 	MoveAction(nullptr),
-	LookAction(nullptr),
-	LeaderCharacter(nullptr)
+	LookAction(nullptr)
 {
 	{//mapping context 로드
 		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));
@@ -84,6 +85,16 @@ ABaseCharacter::ABaseCharacter()
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
+	{
+		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 
+			gameInstance->GetSubsystem<UPlayableCharacterSubsystem>())
+		{//GameInstance의  PlayableCharacterSubsystem에 캐릭터 등록
+			playableCharacterSubsystem->AddPlayer(*this);
+		}
+	}
+
 	APlayerController* playerController = Cast<APlayerController>(Controller);
 	if (!playerController)
 	{
@@ -123,15 +134,6 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	enhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABaseCharacter::Look);
 }
 
-const ABaseCharacter& ABaseCharacter::GetLeaderCharacter() const 
-{
-	return *LeaderCharacter;
-}
-
-void ABaseCharacter::SetLeaderCharacter(const ABaseCharacter& Leader)
-{
-	LeaderCharacter = &Leader;
-}
 
 void ABaseCharacter::Move(const FInputActionValue& Value)
 {
