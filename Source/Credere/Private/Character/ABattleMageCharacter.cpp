@@ -2,13 +2,20 @@
 
 
 #include "Character/ABattleMageCharacter.h"
+#include "Navigation\UNavigationComponent.h"
 
 ABattleMageCharacter::ABattleMageCharacter()
 	:
 	Super::ABaseCharacter(),
+	Navigation(nullptr),
 	SkeletalMeshZAdjust(-80.0),
 	SkeletalMeshYawAdjust(-90.0)
 {
+
+	//Navigation Component	부착
+	Navigation = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
+	Navigation->SetupAttachment(RootComponent);
+
 	//SkeletalMesh로딩
 	static const ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMesh(TEXT("SkeletalMesh'/Game/ParagonSerath/Characters/Heroes/Serath/Meshes/Serath.Serath'"));
 	if (!skeletalMesh.Succeeded())
@@ -34,4 +41,5 @@ void ABattleMageCharacter::BeginPlay()
 void ABattleMageCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	Navigation->SetGoal(FVector(10000.0,0.0,0.0));
 }

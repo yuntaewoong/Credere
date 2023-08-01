@@ -20,6 +20,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 private:
+	UPROPERTY(VisibleAnywhere)
+	class UNavigationComponent* Navigation;
+
 	double SkeletalMeshZAdjust;
 	double SkeletalMeshYawAdjust;
 };
