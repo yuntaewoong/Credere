@@ -76,10 +76,6 @@ ABaseCharacter::ABaseCharacter()
 		FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 		FollowCamera->bUsePawnControlRotation = false;//Camera는 CameraBoom에 종속되므로 따로 회전 x
 	}
-	{//AI Controller설정
-		AIControllerClass = APartnerAIController::StaticClass();
-		AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
-	}
 }
 
 void ABaseCharacter::BeginPlay()
@@ -94,6 +90,7 @@ void ABaseCharacter::BeginPlay()
 			playableCharacterSubsystem->AddPlayer(*this);
 		}
 	}
+	
 
 	APlayerController* playerController = Cast<APlayerController>(Controller);
 	if (!playerController)

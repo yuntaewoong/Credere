@@ -16,6 +16,20 @@ class CREDERE_API AHumanPlayerController : public APlayerController
 public:
 	AHumanPlayerController();
 	
+	virtual void BeginPlay() override;
 	virtual void OnPossess(APawn* InPawn) override;
-	
+	virtual void SetupInputComponent() override;
+private:
+	void ChangeCharacterForward();
+	void ChangeCharacterBackward();
+
+private:
+	UPROPERTY()
+	class UInputMappingContext* DefaultMappingContext;
+
+	UPROPERTY()
+	class UInputAction* CharacterForwardChangeAction;
+
+	UPROPERTY()
+	class UInputAction* CharacterBackwardChangeAction;
 };

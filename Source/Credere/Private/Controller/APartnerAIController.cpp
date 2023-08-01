@@ -57,6 +57,12 @@ void APartnerAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 	RunAI(InPawn);
+	//UE_LOG(LogController,Warning,TEXT("Partner Controller OnPossess Called"));
+}
+
+void APartnerAIController::OnUnPossess()
+{
+	//UE_LOG(LogController,Warning,TEXT("Partner Controller OnUnPossess Called"));
 }
 
 void APartnerAIController::RunAI(APawn* InPawn)

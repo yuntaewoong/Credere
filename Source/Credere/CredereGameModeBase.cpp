@@ -6,6 +6,7 @@
 #include "Character\AArcherCharacter.h"
 #include "Character\ABattleMageCharacter.h"
 #include "Controller\AHumanPlayerController.h"
+#include "Controller\APartnerAIController.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"
 
@@ -24,7 +25,7 @@ void ACredereGameModeBase::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABaseCharacter::StaticClass(), FoundActors);
 	for(auto iter : FoundActors)
 	{//모든 BaseCharacter탐색
-		if(const AWarriorCharacter* defaultWarriorCharacter = Cast<AWarriorCharacter>(iter))
+		if(AWarriorCharacter* defaultWarriorCharacter = Cast<AWarriorCharacter>(iter))
 		{//기본 캐릭터 발견 시
 			if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
 			{
@@ -36,14 +37,22 @@ void ACredereGameModeBase::BeginPlay()
 			}
 			FVector actorLeftVector = defaultWarriorCharacter->GetActorRightVector() * (-1);
 			FVector actorRightVector = defaultWarriorCharacter->GetActorRightVector();
-			AArcherCharacter* archerCharacter = GetWorld()->SpawnActor<AArcherCharacter>(
-				defaultWarriorCharacter->GetActorLocation() + actorLeftVector * spawnDistanceBetweenCharacters,
-				defaultWarriorCharacter->GetActorRotation()
-			);//궁수 스폰
-			ABattleMageCharacter* battleMageCharacter = GetWorld()->SpawnActor<ABattleMageCharacter>(
-				defaultWarriorCharacter->GetActorLocation() + actorRightVector * spawnDistanceBetweenCharacters,
-				defaultWarriorCharacter->GetActorRotation()
-			);//배틀메이지 스폰
+			{//궁수 스폰 & AI컨트롤러 빙의
+				AArcherCharacter* archerCharacter = GetWorld()->SpawnActor<AArcherCharacter>(
+					defaultWarriorCharacter->GetActorLocation() + actorLeftVector * spawnDistanceBetweenCharacters,
+					defaultWarriorCharacter->GetActorRotation()
+				);
+				APartnerAIController* partnerAIController = GetWorld()->SpawnActor<APartnerAIController>();
+				partnerAIController->Possess(archerCharacter);
+			}
+			{//배틀메이지 스폰 & AI컨트롤러 빙의
+				ABattleMageCharacter* battleMageCharacter = GetWorld()->SpawnActor<ABattleMageCharacter>(
+					defaultWarriorCharacter->GetActorLocation() + actorRightVector * spawnDistanceBetweenCharacters,
+					defaultWarriorCharacter->GetActorRotation()
+				);
+				APartnerAIController* partnerAIController = GetWorld()->SpawnActor<APartnerAIController>();
+				partnerAIController->Possess(battleMageCharacter);
+			}
 			break;
 		}
 	}

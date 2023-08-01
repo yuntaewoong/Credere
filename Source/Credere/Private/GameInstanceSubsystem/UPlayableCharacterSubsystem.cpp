@@ -3,6 +3,8 @@
 
 #include "GameInstanceSubsystem/UPlayableCharacterSubsystem.h"
 #include "Character\ABaseCharacter.h"
+#include "Controller\AHumanPlayerController.h"
+#include "Controller\APartnerAIController.h"
 
 
 DEFINE_LOG_CATEGORY(LogGameInstance);
@@ -13,6 +15,7 @@ UPlayableCharacterSubsystem::UPlayableCharacterSubsystem()
 	PlayableCharacters(TArray<ABaseCharacter*>()),
 	Leader(nullptr)
 {
+	PlayableCharacters.Reserve(MAX_PLAYER_NUM);
 }
 
 void UPlayableCharacterSubsystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -24,12 +27,12 @@ void UPlayableCharacterSubsystem::Deinitialize()
 {
 }
 
-void UPlayableCharacterSubsystem::AddPlayer(const ABaseCharacter& Player)
+void UPlayableCharacterSubsystem::AddPlayer(ABaseCharacter& Player)
 {
 	PlayableCharacters.Add(&Player);
 }
 
-void UPlayableCharacterSubsystem::SetLeader(const ABaseCharacter& Player)
+void UPlayableCharacterSubsystem::SetLeader(ABaseCharacter& Player)
 {
 	Leader = &Player;
 }
@@ -39,28 +42,48 @@ const ABaseCharacter& UPlayableCharacterSubsystem::GetLeader() const
 	return *Leader;
 }
 
-bool UPlayableCharacterSubsystem::ChangeLeaderForward()
+bool UPlayableCharacterSubsystem::ChangeCharacterForward()
 {//정방향으로 리더전환 ex/ 1 , 2(리더), 3 -> 1,2,3(리더)
-	int32 leaderIndex = 0;
-	if(!PlayableCharacters.Find(Leader,leaderIndex))
+	if(!Leader)
 	{
-		UE_LOG(LogGameInstance,Warning,TEXT("Leader Not Existed"));
+		UE_LOG(LogGameInstance,Error,TEXT("Leader Is Not Setted"));
 		return false;
 	}
-	int32 newLeaderIndex = (leaderIndex + 1) % PlayableCharacters.Num();
-	Leader = PlayableCharacters[newLeaderIndex];
+	TArray<AController*> currentControllers;
+	currentControllers.Reserve(PlayableCharacters.Num());
+	for(int32 i = 0;i<PlayableCharacters.Num();i++)
+	{//컨트롤러 배열 생성
+		currentControllers.Add(
+			CastChecked<AController>(PlayableCharacters[i]->GetOwner())
+		);
+	}
+	for(int32 i = 0;i<currentControllers.Num();i++)
+	{//모든 컨트롤러가 현재 캐릭터를 Unpossess하고 다음 캐릭터를 Possess
+		int32 nextPlayerIndex = (i + 1) % PlayableCharacters.Num();
+		currentControllers[i]->Possess(PlayableCharacters[nextPlayerIndex]);
+	}
 	return true;
 }
 
-bool UPlayableCharacterSubsystem::ChangeLeaderBackward()
+bool UPlayableCharacterSubsystem::ChangeCharacterBackward()
 {//역방향으로 리더전환 ex/ 1, 2(리더),3->1(리더),2,3
-	int32 leaderIndex = 0;
-	if(!PlayableCharacters.Find(Leader,leaderIndex))
+	if(!Leader)
 	{
-		UE_LOG(LogGameInstance,Warning,TEXT("Leader Not Existed"));
+		UE_LOG(LogGameInstance,Error,TEXT("Leader Is Not Setted"));
 		return false;
 	}
-	int32 newLeaderIndex = (leaderIndex - 1) % PlayableCharacters.Num();
-	Leader = PlayableCharacters[newLeaderIndex];
+	TArray<AController*> currentControllers;
+	currentControllers.Reserve(PlayableCharacters.Num());
+	for(int32 i = 0;i<PlayableCharacters.Num();i++)
+	{//컨트롤러 배열 생성
+		currentControllers.Add(
+			CastChecked<AController>(PlayableCharacters[i]->GetOwner())
+		);
+	}
+	for(int32 i = 0;i<currentControllers.Num();i++)
+	{//모든 컨트롤러가 현재 캐릭터를 Unpossess하고 이전 캐릭터를 Possess
+		int32 nextPlayerIndex = (i + PlayableCharacters.Num() - 1) % PlayableCharacters.Num();
+		currentControllers[i]->Possess(PlayableCharacters[nextPlayerIndex]);
+	}
 	return true;
 }

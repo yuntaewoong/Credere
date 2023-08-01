@@ -20,12 +20,13 @@ public:
 	virtual void Deinitialize() override;
 
 
-	void AddPlayer(const class ABaseCharacter& Player);
-	void SetLeader(const class ABaseCharacter& Player);
+	void AddPlayer(class ABaseCharacter& Player);
+	void SetLeader(class ABaseCharacter& Player);
 	const class ABaseCharacter& GetLeader() const;
-	bool ChangeLeaderForward();
-	bool ChangeLeaderBackward();
+	bool ChangeCharacterForward();
+	bool ChangeCharacterBackward();
 private:
-	TArray<const class ABaseCharacter*> PlayableCharacters;
-	const class ABaseCharacter* Leader;
+	static const uint8 MAX_PLAYER_NUM = 3;
+	TArray<class ABaseCharacter*> PlayableCharacters;
+	class ABaseCharacter* Leader;
 };
