@@ -20,7 +20,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;
-	void RunAI(APawn* InPawn);
+	void RunAI();
+	void StopAI();
 private:
 	static const FName GoalKey;
 

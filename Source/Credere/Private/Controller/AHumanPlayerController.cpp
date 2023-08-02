@@ -75,7 +75,7 @@ void AHumanPlayerController::ChangeCharacterForward()
 	{
 		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 
 			gameInstance->GetSubsystem<UPlayableCharacterSubsystem>())
-		{//GameInstance의  PlayableCharacterSubsystem에 캐릭터 등록
+		{
 			if(!playableCharacterSubsystem->ChangeCharacterForward())
 			{
 				UE_LOG(LogController,Error,TEXT("Change Character Forward Failed"));
@@ -86,12 +86,11 @@ void AHumanPlayerController::ChangeCharacterForward()
 
 void AHumanPlayerController::ChangeCharacterBackward()
 {
-	UE_LOG(LogController,Warning,TEXT("Change Character Backward called"));
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
 	{
 		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 
 			gameInstance->GetSubsystem<UPlayableCharacterSubsystem>())
-		{//GameInstance의  PlayableCharacterSubsystem에 캐릭터 등록
+		{
 			if(!playableCharacterSubsystem->ChangeCharacterBackward())
 			{
 				UE_LOG(LogController,Error,TEXT("Change Character Backward Failed"));

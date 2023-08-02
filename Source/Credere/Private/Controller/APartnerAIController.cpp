@@ -46,8 +46,8 @@ void APartnerAIController::Tick(float DeltaTime)
 			leaderForwardVector = playableCharacterSubsystem->GetLeader().GetActorForwardVector();
 		}
 	}
-	const ABaseCharacter* ownerCharacter = Cast<ABaseCharacter>(GetPawn());
-	if(ownerCharacter)
+	const ABaseCharacter* controlledCharacter = Cast<ABaseCharacter>(GetPawn());
+	if(controlledCharacter)
 	{//리더 캐릭터를 목적지로 설정
 		Blackboard->SetValueAsVector(GoalKey, leaderLocation - leaderForwardVector * 100);
 	}
@@ -56,16 +56,18 @@ void APartnerAIController::Tick(float DeltaTime)
 void APartnerAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
-	RunAI(InPawn);
+	RunAI();
 	//UE_LOG(LogController,Warning,TEXT("Partner Controller OnPossess Called"));
 }
 
 void APartnerAIController::OnUnPossess()
 {
+	Super::OnUnPossess();
+	StopAI();
 	//UE_LOG(LogController,Warning,TEXT("Partner Controller OnUnPossess Called"));
 }
 
-void APartnerAIController::RunAI(APawn* InPawn)
+void APartnerAIController::RunAI()
 {
 	UBlackboardComponent* bbComp = Blackboard;
 	if (UseBlackboard(PartnerBB,bbComp))
@@ -75,4 +77,15 @@ void APartnerAIController::RunAI(APawn* InPawn)
 			UE_LOG(LogController,Error,TEXT("RunBehaviorTree Not Called"));
 		}
 	}
+}
+
+void APartnerAIController::StopAI()
+{
+	UBehaviorTreeComponent* BehaviorTreeComponent = Cast<UBehaviorTreeComponent>(BrainComponent);
+	if (!BehaviorTreeComponent)
+	{
+		UE_LOG(LogController,Warning,TEXT("Cannot find btComponent"));
+		return;
+	}
+	BehaviorTreeComponent->StopTree(EBTStopMode::Safe);
 }
