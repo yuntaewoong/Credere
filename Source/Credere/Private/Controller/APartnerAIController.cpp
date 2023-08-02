@@ -37,6 +37,7 @@ void APartnerAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	FVector leaderLocation = FVector::Zero();
 	FVector leaderForwardVector = FVector::Zero();
+	FVector leaderRightVector = FVector::Zero();
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
 	{
 		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 
@@ -44,12 +45,13 @@ void APartnerAIController::Tick(float DeltaTime)
 		{//GameInstance의  PlayableCharacterSubsystem에서 리더정보 Get
 			leaderLocation = playableCharacterSubsystem->GetLeader().GetActorLocation();
 			leaderForwardVector = playableCharacterSubsystem->GetLeader().GetActorForwardVector();
+			leaderRightVector = playableCharacterSubsystem->GetLeader().GetActorRightVector();
 		}
 	}
 	const ABaseCharacter* controlledCharacter = Cast<ABaseCharacter>(GetPawn());
 	if(controlledCharacter)
 	{//리더 캐릭터를 목적지로 설정
-		Blackboard->SetValueAsVector(GoalKey, leaderLocation - leaderForwardVector * 100);
+		Blackboard->SetValueAsVector(GoalKey, leaderLocation - (leaderForwardVector+leaderRightVector) * 300);
 	}
 }
 

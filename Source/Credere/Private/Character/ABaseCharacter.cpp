@@ -94,8 +94,7 @@ void ABaseCharacter::BeginPlay()
 
 	APlayerController* playerController = Cast<APlayerController>(Controller);
 	if (!playerController)
-	{
-		UE_LOG(LogActor,Warning,TEXT("Human Player Controller Not Setted"));
+	{//Player가 조작하는 캐릭터일때만 인풋등록
 		return;
 	}
 	UEnhancedInputLocalPlayerSubsystem* subsystem = 

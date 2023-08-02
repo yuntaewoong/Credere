@@ -32,7 +32,7 @@ void UPlayableCharacterSubsystem::AddPlayer(ABaseCharacter& Player)
 	PlayableCharacters.Add(&Player);
 }
 
-void UPlayableCharacterSubsystem::SetLeader(ABaseCharacter& Player)
+void UPlayableCharacterSubsystem::SetLeader(const ABaseCharacter& Player)
 {
 	Leader = &Player;
 }
