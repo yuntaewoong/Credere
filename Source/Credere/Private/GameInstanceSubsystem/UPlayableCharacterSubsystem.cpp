@@ -42,6 +42,11 @@ const ABaseCharacter& UPlayableCharacterSubsystem::GetLeader() const
 	return *Leader;
 }
 
+bool UPlayableCharacterSubsystem::IsLeader(const ABaseCharacter& Player) const
+{
+	return Leader == &Player;
+}
+
 bool UPlayableCharacterSubsystem::ChangeCharacterForward()
 {//정방향으로 리더전환 ex/ 1 , 2(리더), 3 -> 1,2,3(리더)
 	if(!Leader)
@@ -61,6 +66,10 @@ bool UPlayableCharacterSubsystem::ChangeCharacterForward()
 	{//모든 컨트롤러가 현재 캐릭터를 Unpossess하고 다음 캐릭터를 Possess
 		int32 nextPlayerIndex = (i + 1) % PlayableCharacters.Num();
 		currentControllers[i]->Possess(PlayableCharacters[nextPlayerIndex]);
+		if(AHumanPlayerController* leaderController = Cast<AHumanPlayerController>(currentControllers[i]))
+		{//리더 컨트롤러일시 리더 변경
+			Leader = PlayableCharacters[nextPlayerIndex];
+		}
 	}
 	return true;
 }
@@ -84,6 +93,10 @@ bool UPlayableCharacterSubsystem::ChangeCharacterBackward()
 	{//모든 컨트롤러가 현재 캐릭터를 Unpossess하고 이전 캐릭터를 Possess
 		int32 nextPlayerIndex = (i + PlayableCharacters.Num() - 1) % PlayableCharacters.Num();
 		currentControllers[i]->Possess(PlayableCharacters[nextPlayerIndex]);
+		if(AHumanPlayerController* leaderController = Cast<AHumanPlayerController>(currentControllers[i]))
+		{//리더 컨트롤러일시 리더 변경
+			Leader = PlayableCharacters[nextPlayerIndex];
+		}
 	}
 	return true;
 }

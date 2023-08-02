@@ -23,6 +23,7 @@ public:
 	void AddPlayer(class ABaseCharacter& Player);
 	void SetLeader(class ABaseCharacter& Player);
 	const class ABaseCharacter& GetLeader() const;
+	bool IsLeader(const class ABaseCharacter& Player) const;
 	bool ChangeCharacterForward();
 	bool ChangeCharacterBackward();
 private:

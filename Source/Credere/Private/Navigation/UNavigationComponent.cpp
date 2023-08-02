@@ -14,8 +14,9 @@ UNavigationComponent::UNavigationComponent()
 	RouteSpline(nullptr),
 	RouteSplineMeshes(TArray<USplineMeshComponent*>()),
 	MaxNumOfSplinePoints(15u),
-	SplineMeshTickness(0.4),
-	RouteZHeight(40.0)
+	SplineMeshTickness(0.1),
+	RouteZHeight(40.0),
+	bIsActive(false)
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
@@ -55,6 +56,16 @@ void UNavigationComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	UpdateSplineMeshes();
 }
 
+void UNavigationComponent::SetActive(bool bNewActive, bool bReset)
+{//네비게이션 컴포넌트를 비활성화할때 Spline Mesh 렌더여부와 길찾기 여부 전환
+	Super::SetActive(bNewActive,bReset);
+	bIsActive = bNewActive;
+	for(auto splineMesh : RouteSplineMeshes)
+	{	
+		splineMesh->SetVisibility(bNewActive);
+	}
+}
+
 void UNavigationComponent::SetGoal(FVector goal)
 {
 	GoalLocation = goal;
@@ -63,6 +74,8 @@ void UNavigationComponent::SetGoal(FVector goal)
 //경로정보를 기반으로 새로운 Spline Mesh업데이트
 void UNavigationComponent::UpdateSplineMeshes()
 {
+	if(!bIsActive)//컴포넌트가 활성화되지 않으면 길찾기 연산 x
+		return;
 	const UNavigationSystemV1* navSys = UNavigationSystemV1::GetCurrent(GetWorld());
 	const UNavigationPath* path = navSys->FindPathToLocationSynchronously(
 		GetWorld(),
@@ -100,13 +113,7 @@ void UNavigationComponent::UpdateSplineMeshes()
 		}
 		for(uint8 i = RouteSpline->GetNumberOfSplineSegments();i<MaxNumOfSplinePoints-1;i++)
 		{//쓰이지 않는 Spline Mesh는 안보이게 처리
-			RouteSplineMeshes[i]->SetStartAndEnd(
-				GetOwner()->GetActorLocation(),
-				FVector::Zero(),
-				GetOwner()->GetActorLocation(),
-				FVector::Zero(),
-				true
-			);
+			RouteSplineMeshes[i]->SetVisibility(false);
 		}
 	}
 }

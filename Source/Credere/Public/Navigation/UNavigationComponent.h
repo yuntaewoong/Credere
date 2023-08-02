@@ -20,6 +20,7 @@ protected:
 
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void SetActive(bool bNewActive,bool bReset = false) override;
 	void SetGoal(FVector goal);
 
 private:
@@ -33,6 +34,7 @@ private:
 	uint16 MaxNumOfSplinePoints;
 	double SplineMeshTickness;
 	double RouteZHeight;
+	bool bIsActive;
 private:
 	void UpdateSplineMeshes();
 
