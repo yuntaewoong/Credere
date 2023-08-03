@@ -2,21 +2,15 @@
 
 
 #include "PlayableCharacter/ABattleMageCharacter.h"
-#include "Navigation\UNavigationComponent.h"
-#include "Kismet/GameplayStatics.h"
-#include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"
 
 ABattleMageCharacter::ABattleMageCharacter()
 	:
 	Super::ABasePlayableCharacter(),
-	Navigation(nullptr),
 	SkeletalMeshZAdjust(-80.0),
 	SkeletalMeshYawAdjust(-90.0)
 {
 
-	//Navigation Component	부착
-	Navigation = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
-	Navigation->SetupAttachment(RootComponent);
+
 
 	//SkeletalMesh로딩
 	static const ConstructorHelpers::FObjectFinder<USkeletalMesh> skeletalMesh(TEXT("SkeletalMesh'/Game/ParagonSerath/Characters/Heroes/Serath/Meshes/Serath.Serath'"));
@@ -43,20 +37,4 @@ void ABattleMageCharacter::BeginPlay()
 void ABattleMageCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Navigation->SetGoal(FVector(10000.0,0.0,0.0));
-	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
-	{
-		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 
-			gameInstance->GetSubsystem<UPlayableCharacterSubsystem>())
-		{//GameInstance의  PlayableCharacterSubsystem에 본인이 리더인지 물어봄
-			if(playableCharacterSubsystem->IsLeader(*this))
-			{//리더일때만 네비게이션 컴포넌트 On
-				Navigation->SetActive(true);	
-			}
-			else
-			{
-				Navigation->SetActive(false);
-			}
-		}
-	}
 }

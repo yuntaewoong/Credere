@@ -10,11 +10,13 @@
 #include "EnhancedInputSubsystems.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"
+#include "Navigation\UNavigationComponent.h"
 #include "AIController\APartnerAIController.h"
 
 ABasePlayableCharacter::ABasePlayableCharacter()
 	:   
 	Super::ACharacter(),
+	Navigation(nullptr),
 	CameraBoom(nullptr),
 	FollowCamera(nullptr),
 	DefaultMappingContext(nullptr),
@@ -22,6 +24,11 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	MoveAction(nullptr),
 	LookAction(nullptr)
 {
+	{//Navigation Component	부착
+		Navigation = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
+		Navigation->SetupAttachment(RootComponent);
+	}
+	
 	{//mapping context 로드
 		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));
 		if (mappingContext.Succeeded())
@@ -113,6 +120,22 @@ void ABasePlayableCharacter::BeginPlay()
 void ABasePlayableCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	Navigation->SetGoal(FVector(10000.0,0.0,0.0));
+	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
+	{
+		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 
+			gameInstance->GetSubsystem<UPlayableCharacterSubsystem>())
+		{//GameInstance의  PlayableCharacterSubsystem에 본인이 리더인지 물어봄
+			if(playableCharacterSubsystem->IsLeader(*this))
+			{//리더일때만 네비게이션 컴포넌트 On
+				Navigation->SetActive(true);	
+			}
+			else
+			{
+				Navigation->SetActive(false);
+			}
+		}
+	}
 }
 
 void ABasePlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
