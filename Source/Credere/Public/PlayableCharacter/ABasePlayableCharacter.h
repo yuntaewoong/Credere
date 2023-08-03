@@ -7,7 +7,7 @@
 #include "InputActionValue.h"
 #include "ABasePlayableCharacter.generated.h"
 
-UCLASS()
+UCLASS(Abstract)
 class CREDERE_API ABasePlayableCharacter : public ACharacter
 {
 	GENERATED_BODY()
