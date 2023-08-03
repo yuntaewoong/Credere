@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/ABaseCharacter.h"
+#include "Character/ABasePlayableCharacter.h"
 #include "ABattleMageCharacter.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CREDERE_API ABattleMageCharacter : public ABaseCharacter
+class CREDERE_API ABattleMageCharacter : public ABasePlayableCharacter
 {
 	GENERATED_BODY()
 public:

@@ -20,14 +20,14 @@ public:
 	virtual void Deinitialize() override;
 
 
-	void AddPlayer(class ABaseCharacter& Player);
-	void SetLeader(const class ABaseCharacter& Player);
-	const class ABaseCharacter& GetLeader() const;
-	bool IsLeader(const class ABaseCharacter& Player) const;
+	void AddPlayer(class ABasePlayableCharacter& Player);
+	void SetLeader(const class ABasePlayableCharacter& Player);
+	const class ABasePlayableCharacter& GetLeader() const;
+	bool IsLeader(const class ABasePlayableCharacter& Player) const;
 	bool ChangeCharacterForward();
 	bool ChangeCharacterBackward();
 private:
 	static const uint8 MAX_PLAYER_NUM = 3;
-	TArray<class ABaseCharacter*> PlayableCharacters;
-	const class ABaseCharacter* Leader;
+	TArray<class ABasePlayableCharacter*> PlayableCharacters;
+	const class ABasePlayableCharacter* Leader;
 };

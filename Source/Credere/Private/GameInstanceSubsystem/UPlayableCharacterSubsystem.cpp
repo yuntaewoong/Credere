@@ -2,7 +2,7 @@
 
 
 #include "GameInstanceSubsystem/UPlayableCharacterSubsystem.h"
-#include "Character\ABaseCharacter.h"
+#include "Character\ABasePlayableCharacter.h"
 #include "Controller\AHumanPlayerController.h"
 #include "Controller\APartnerAIController.h"
 
@@ -12,7 +12,7 @@ DEFINE_LOG_CATEGORY(LogGameInstance);
 UPlayableCharacterSubsystem::UPlayableCharacterSubsystem()
 	:
 	Super::UGameInstanceSubsystem(),
-	PlayableCharacters(TArray<ABaseCharacter*>()),
+	PlayableCharacters(TArray<ABasePlayableCharacter*>()),
 	Leader(nullptr)
 {
 	PlayableCharacters.Reserve(MAX_PLAYER_NUM);
@@ -27,22 +27,22 @@ void UPlayableCharacterSubsystem::Deinitialize()
 {
 }
 
-void UPlayableCharacterSubsystem::AddPlayer(ABaseCharacter& Player)
+void UPlayableCharacterSubsystem::AddPlayer(ABasePlayableCharacter& Player)
 {
 	PlayableCharacters.Add(&Player);
 }
 
-void UPlayableCharacterSubsystem::SetLeader(const ABaseCharacter& Player)
+void UPlayableCharacterSubsystem::SetLeader(const ABasePlayableCharacter& Player)
 {
 	Leader = &Player;
 }
 
-const ABaseCharacter& UPlayableCharacterSubsystem::GetLeader() const
+const ABasePlayableCharacter& UPlayableCharacterSubsystem::GetLeader() const
 {
 	return *Leader;
 }
 
-bool UPlayableCharacterSubsystem::IsLeader(const ABaseCharacter& Player) const
+bool UPlayableCharacterSubsystem::IsLeader(const ABasePlayableCharacter& Player) const
 {
 	return Leader == &Player;
 }

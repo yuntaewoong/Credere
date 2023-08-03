@@ -2,7 +2,7 @@
 
 
 #include "Controller/APartnerAIController.h"
-#include "Character\ABaseCharacter.h"
+#include "Character\ABasePlayableCharacter.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -48,7 +48,7 @@ void APartnerAIController::Tick(float DeltaTime)
 			leaderRightVector = playableCharacterSubsystem->GetLeader().GetActorRightVector();
 		}
 	}
-	const ABaseCharacter* controlledCharacter = Cast<ABaseCharacter>(GetPawn());
+	const ABasePlayableCharacter* controlledCharacter = Cast<ABasePlayableCharacter>(GetPawn());
 	if(controlledCharacter)
 	{//리더 캐릭터를 목적지로 설정
 		Blackboard->SetValueAsVector(GoalKey, leaderLocation - (leaderForwardVector+leaderRightVector) * 300);

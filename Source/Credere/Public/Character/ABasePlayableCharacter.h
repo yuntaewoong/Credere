@@ -5,15 +5,15 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
-#include "ABaseCharacter.generated.h"
+#include "ABasePlayableCharacter.generated.h"
 
 UCLASS()
-class CREDERE_API ABaseCharacter : public ACharacter
+class CREDERE_API ABasePlayableCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	ABaseCharacter();
+	ABasePlayableCharacter();
 
 protected:
 	virtual void BeginPlay() override;

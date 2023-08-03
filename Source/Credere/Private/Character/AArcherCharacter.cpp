@@ -9,7 +9,7 @@
 
 AArcherCharacter::AArcherCharacter()
 	:
-	Super::ABaseCharacter(),
+	Super::ABasePlayableCharacter(),
 	Navigation(nullptr),
 	SkeletalMeshZAdjust(-80.0),
 	SkeletalMeshYawAdjust(-90.0)

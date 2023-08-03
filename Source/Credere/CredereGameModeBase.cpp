@@ -22,7 +22,7 @@ ACredereGameModeBase::ACredereGameModeBase(const FObjectInitializer& ObjectIniti
 void ACredereGameModeBase::BeginPlay()
 {
 	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABaseCharacter::StaticClass(), FoundActors);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABasePlayableCharacter::StaticClass(), FoundActors);
 	for(auto iter : FoundActors)
 	{//모든 BaseCharacter탐색
 		if(AWarriorCharacter* defaultWarriorCharacter = Cast<AWarriorCharacter>(iter))

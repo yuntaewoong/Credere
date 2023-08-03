@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Character/ABaseCharacter.h"
+#include "Character/ABasePlayableCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -12,7 +12,7 @@
 #include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"
 #include "Controller\APartnerAIController.h"
 
-ABaseCharacter::ABaseCharacter()
+ABasePlayableCharacter::ABasePlayableCharacter()
 	:   
 	Super::ACharacter(),
 	CameraBoom(nullptr),
@@ -78,7 +78,7 @@ ABaseCharacter::ABaseCharacter()
 	}
 }
 
-void ABaseCharacter::BeginPlay()
+void ABasePlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -110,12 +110,12 @@ void ABaseCharacter::BeginPlay()
 	subsystem->AddMappingContext(DefaultMappingContext, 0);
 }
 
-void ABaseCharacter::Tick(float DeltaTime)
+void ABasePlayableCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
 
-void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ABasePlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	UEnhancedInputComponent* enhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
@@ -126,12 +126,12 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	}
 	enhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 	enhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-	enhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABaseCharacter::Move);
-	enhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABaseCharacter::Look);
+	enhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABasePlayableCharacter::Move);
+	enhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABasePlayableCharacter::Look);
 }
 
 
-void ABaseCharacter::Move(const FInputActionValue& Value)
+void ABasePlayableCharacter::Move(const FInputActionValue& Value)
 {
 	FVector2D movementVector = Value.Get<FVector2D>();//FVector2D인풋데이터
 	if (Controller == nullptr)
@@ -147,7 +147,7 @@ void ABaseCharacter::Move(const FInputActionValue& Value)
 	AddMovementInput(rightDirection, movementVector.X);
 }
 
-void ABaseCharacter::Look(const FInputActionValue& Value)
+void ABasePlayableCharacter::Look(const FInputActionValue& Value)
 {
 	FVector2D lookAxisVector = Value.Get<FVector2D>();
 	if (Controller == nullptr)
