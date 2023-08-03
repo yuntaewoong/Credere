@@ -2,7 +2,7 @@
 
 
 #include "Controller/APartnerAIController.h"
-#include "Character\ABasePlayableCharacter.h"
+#include "PlayableCharacter\ABasePlayableCharacter.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/ABasePlayableCharacter.h"
+#include "PlayableCharacter/ABasePlayableCharacter.h"
 #include "AArcherCharacter.generated.h"
 
 /**

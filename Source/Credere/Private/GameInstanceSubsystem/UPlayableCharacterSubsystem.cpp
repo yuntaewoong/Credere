@@ -2,7 +2,7 @@
 
 
 #include "GameInstanceSubsystem/UPlayableCharacterSubsystem.h"
-#include "Character\ABasePlayableCharacter.h"
+#include "PlayableCharacter\ABasePlayableCharacter.h"
 #include "Controller\AHumanPlayerController.h"
 #include "Controller\APartnerAIController.h"
 

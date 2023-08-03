@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Character/AWarriorCharacter.h"
+#include "PlayableCharacter/AWarriorCharacter.h"
 #include "Navigation/UNavigationComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"

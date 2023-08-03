@@ -3,25 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Character/ABasePlayableCharacter.h"
-#include "ABattleMageCharacter.generated.h"
+#include "PlayableCharacter/ABasePlayableCharacter.h"
+#include "AWarriorCharacter.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CREDERE_API ABattleMageCharacter : public ABasePlayableCharacter
+class CREDERE_API AWarriorCharacter : public ABasePlayableCharacter
 {
 	GENERATED_BODY()
 public:
-	ABattleMageCharacter();
-
-	virtual void BeginPlay() override;
+	AWarriorCharacter();
 	virtual void Tick(float DeltaTime) override;
+	
 private:
 	UPROPERTY(VisibleAnywhere)
 	class UNavigationComponent* Navigation;
 
 	double SkeletalMeshZAdjust;
 	double SkeletalMeshYawAdjust;
+	
 };

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Character/ABattleMageCharacter.h"
+#include "PlayableCharacter/ABattleMageCharacter.h"
 #include "Navigation\UNavigationComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"

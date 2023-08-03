@@ -2,9 +2,9 @@
 
 
 #include "CredereGameModeBase.h"
-#include "Character\AWarriorCharacter.h"
-#include "Character\AArcherCharacter.h"
-#include "Character\ABattleMageCharacter.h"
+#include "PlayableCharacter\AWarriorCharacter.h"
+#include "PlayableCharacter\AArcherCharacter.h"
+#include "PlayableCharacter\ABattleMageCharacter.h"
 #include "Controller\AHumanPlayerController.h"
 #include "Controller\APartnerAIController.h"
 #include "Kismet/GameplayStatics.h"
