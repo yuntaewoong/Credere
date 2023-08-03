@@ -5,8 +5,8 @@
 #include "PlayableCharacter\AWarriorCharacter.h"
 #include "PlayableCharacter\AArcherCharacter.h"
 #include "PlayableCharacter\ABattleMageCharacter.h"
-#include "Controller\AHumanPlayerController.h"
-#include "Controller\APartnerAIController.h"
+#include "PlayerController\AHumanPlayerController.h"
+#include "AIController\APartnerAIController.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"
 

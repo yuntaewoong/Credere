@@ -10,7 +10,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"
-#include "Controller\APartnerAIController.h"
+#include "AIController\APartnerAIController.h"
 
 ABasePlayableCharacter::ABasePlayableCharacter()
 	:   

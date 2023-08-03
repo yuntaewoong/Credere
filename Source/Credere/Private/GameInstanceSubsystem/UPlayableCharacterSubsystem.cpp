@@ -3,8 +3,8 @@
 
 #include "GameInstanceSubsystem/UPlayableCharacterSubsystem.h"
 #include "PlayableCharacter\ABasePlayableCharacter.h"
-#include "Controller\AHumanPlayerController.h"
-#include "Controller\APartnerAIController.h"
+#include "PlayerController\AHumanPlayerController.h"
+#include "AIController\APartnerAIController.h"
 
 
 DEFINE_LOG_CATEGORY(LogGameInstance);
