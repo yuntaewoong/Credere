@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "ABaseEnemyCharacter.generated.h"
 
-UCLASS()
+UCLASS(Abstract)
 class CREDERE_API ABaseEnemyCharacter : public ACharacter
 {
 	GENERATED_BODY()
@@ -14,16 +14,5 @@ class CREDERE_API ABaseEnemyCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ABaseEnemyCharacter();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };
