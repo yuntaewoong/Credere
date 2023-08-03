@@ -14,22 +14,12 @@ const FName APartnerAIController::GoalKey(TEXT("Goal"));
 
 APartnerAIController::APartnerAIController()
 	:
-	Super::AAIController(),
-	PartnerBT(nullptr),
-	PartnerBB(nullptr)
+	Super::ABaseAIController()
 {
-	//비헤이비어 트리 로드
-	static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTObject(TEXT("BehaviorTree'/Game/AI/Partner/PartnerBT.PartnerBT'"));
-	if (!BTObject.Succeeded())
-		UE_LOG(LogController,Error,TEXT("PartnerBT Not Loaded"));
-	PartnerBT = BTObject.Object;
-
-	//블랙보드 로드
-	static ConstructorHelpers::FObjectFinder<UBlackboardData> BBObject(TEXT("BlackboardData'/Game/AI/Partner/PartnerBB.PartnerBB'"));
-	if (!BBObject.Succeeded())
-		UE_LOG(LogController,Error,TEXT("PartnerBB Not Loaded"));
-	PartnerBB = BBObject.Object;
-	
+	Initialize(
+		TEXT("BehaviorTree'/Game/AI/Partner/PartnerBT.PartnerBT'"),
+		TEXT("BlackboardData'/Game/AI/Partner/PartnerBB.PartnerBB'")
+	);
 }
 
 void APartnerAIController::Tick(float DeltaTime)
@@ -55,39 +45,4 @@ void APartnerAIController::Tick(float DeltaTime)
 	}
 }
 
-void APartnerAIController::OnPossess(APawn* InPawn)
-{
-	Super::OnPossess(InPawn);
-	RunAI();
-	//UE_LOG(LogController,Warning,TEXT("Partner Controller OnPossess Called"));
-}
 
-void APartnerAIController::OnUnPossess()
-{
-	Super::OnUnPossess();
-	StopAI();
-	//UE_LOG(LogController,Warning,TEXT("Partner Controller OnUnPossess Called"));
-}
-
-void APartnerAIController::RunAI()
-{
-	UBlackboardComponent* bbComp = Blackboard;
-	if (UseBlackboard(PartnerBB,bbComp))
-	{
-		if(!RunBehaviorTree(PartnerBT))
-		{
-			UE_LOG(LogController,Error,TEXT("RunBehaviorTree Not Called"));
-		}
-	}
-}
-
-void APartnerAIController::StopAI()
-{
-	UBehaviorTreeComponent* BehaviorTreeComponent = Cast<UBehaviorTreeComponent>(BrainComponent);
-	if (!BehaviorTreeComponent)
-	{
-		UE_LOG(LogController,Warning,TEXT("Cannot find btComponent"));
-		return;
-	}
-	BehaviorTreeComponent->StopTree(EBTStopMode::Safe);
-}
