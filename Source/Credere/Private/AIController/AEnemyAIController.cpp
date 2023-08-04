@@ -2,6 +2,8 @@
 
 
 #include "AIController/AEnemyAIController.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"
@@ -14,10 +16,17 @@ AEnemyAIController::AEnemyAIController()
 	:
 	Super::ABaseAIController()
 {
-	Initialize(
-		TEXT("BehaviorTree'/Game/AI/Enemy/EnemyBT.EnemyBT'"),
-		TEXT("BlackboardData'/Game/AI/Enemy/EnemyBB.EnemyBB'")
-	);
+	//비헤이비어 트리 로드
+	static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTObject(TEXT("BehaviorTree'/Game/AI/Enemy/EnemyBT.EnemyBT'"));
+	if (!BTObject.Succeeded())
+		UE_LOG(LogController,Error,TEXT("PartnerBT Not Loaded"));
+	behaviorTree = BTObject.Object;
+
+	//블랙보드 로드
+	static ConstructorHelpers::FObjectFinder<UBlackboardData> BBObject(TEXT("BlackboardData'/Game/AI/Enemy/EnemyBB.EnemyBB'"));
+	if (!BBObject.Succeeded())
+		UE_LOG(LogController,Error,TEXT("PartnerBB Not Loaded"));
+	blackBoardData = BBObject.Object;
 }
 void AEnemyAIController::Tick(float DeltaTime)
 {

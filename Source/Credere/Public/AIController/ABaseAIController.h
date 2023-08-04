@@ -18,14 +18,16 @@ public:
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;
 protected:
-	void Initialize(FString btLocation,FString bbLocation);
+	void LoadAssets(FString btLocation,FString bbLocation);
+protected:
+	UPROPERTY(VisibleAnywhere)
+	class UBehaviorTree* behaviorTree;
+
+	UPROPERTY(VisibleAnywhere)
+	class UBlackboardData* blackBoardData;
 private:
 	void RunAI();
 	void StopAI();
 private:
-	UPROPERTY(VisibleAnywhere)
-	class UBehaviorTree* PartnerBT;
-
-	UPROPERTY(VisibleAnywhere)
-	class UBlackboardData* PartnerBB;
+	
 };

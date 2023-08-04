@@ -9,8 +9,8 @@
 ABaseAIController::ABaseAIController()
 	:
 	Super::AAIController(),
-	PartnerBT(nullptr),
-	PartnerBB(nullptr)
+	behaviorTree(nullptr),
+	blackBoardData(nullptr)
 {
 
 }
@@ -19,37 +19,21 @@ void ABaseAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 	RunAI();
-	//UE_LOG(LogController,Warning,TEXT("Partner Controller OnPossess Called"));
 }
 
 void ABaseAIController::OnUnPossess()
 {	
 	Super::OnUnPossess();
 	StopAI();
-	//UE_LOG(LogController,Warning,TEXT("Partner Controller OnUnPossess Called"));
 }
 
-void ABaseAIController::Initialize(FString btLocation, FString bbLocation)
-{
-	//비헤이비어 트리 로드
-	static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTObject(*btLocation);
-	if (!BTObject.Succeeded())
-		UE_LOG(LogController,Error,TEXT("PartnerBT Not Loaded"));
-	PartnerBT = BTObject.Object;
-
-	//블랙보드 로드
-	static ConstructorHelpers::FObjectFinder<UBlackboardData> BBObject(*bbLocation);
-	if (!BBObject.Succeeded())
-		UE_LOG(LogController,Error,TEXT("PartnerBB Not Loaded"));
-	PartnerBB = BBObject.Object;
-}
 
 void ABaseAIController::RunAI()
 {
 	UBlackboardComponent* bbComp = Blackboard;
-	if (UseBlackboard(PartnerBB,bbComp))
+	if (UseBlackboard(blackBoardData,bbComp))
 	{
-		if(!RunBehaviorTree(PartnerBT))
+		if(!RunBehaviorTree(behaviorTree))
 		{
 			UE_LOG(LogController,Error,TEXT("RunBehaviorTree Not Called"));
 		}
