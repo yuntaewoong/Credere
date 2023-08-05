@@ -20,6 +20,7 @@ AArcherCharacter::AArcherCharacter()
 	if (!animationBlueprint.Succeeded())
 		UE_LOG(LogSkeletalMesh, Error, TEXT("Archer AnimBP Not Loaded"));
 	GetMesh()->SetAnimInstanceClass(animationBlueprint.Object->GeneratedClass);
+
 	GetMesh()->AddRelativeLocation(FVector(0.0, 0.0, SkeletalMeshZAdjust));
 	GetMesh()->AddRelativeRotation(FQuat(FRotator(0.0,SkeletalMeshYawAdjust,0.0)));
 }
