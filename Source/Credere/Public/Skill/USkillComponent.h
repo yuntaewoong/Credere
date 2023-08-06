@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Enum\ESkillType.h"
 #include "USkillComponent.generated.h"
 
 
@@ -17,9 +18,10 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
+	void SetStatActive(ESkillType customSkillType,bool isActive);
+private:
+	TStaticArray<class UBaseSkill*,static_cast<uint32>(ESkillType::ITEM_NUM)> Skills;
 		
 };

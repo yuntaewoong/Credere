@@ -4,6 +4,7 @@
 #include "PlayableCharacter/ABasePlayableCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Stat\UStatComponent.h"
+#include "Skill\USkillComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "InputMappingContext.h"
@@ -19,6 +20,7 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	Super::ACharacter(),
 	NavigationComponent(nullptr),
 	StatComponent(nullptr),
+	SkillComponent(nullptr),
 	CameraBoom(nullptr),
 	FollowCamera(nullptr),
 	DefaultMappingContext(nullptr),
@@ -32,6 +34,10 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	{//Stat Component 부착
 		StatComponent = CreateDefaultSubobject<UStatComponent>(TEXT("Stat"));
 		StatComponent->SetStatActive(ECustomStatType::HP,true);
+	}
+	{//Skill Component 부착
+		SkillComponent = CreateDefaultSubobject<USkillComponent>(TEXT("Skill"));
+		SkillComponent->SetStatActive(ESkillType::AUTO_ATTACK,true);
 	}
 	{//mapping context 로드
 		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));

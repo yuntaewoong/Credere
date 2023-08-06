@@ -13,5 +13,6 @@ UCLASS()
 class CREDERE_API UAutoAttackSkill : public UBaseSkill
 {
 	GENERATED_BODY()
-	
+public:
+	UAutoAttackSkill();
 };

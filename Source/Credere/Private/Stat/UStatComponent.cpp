@@ -8,7 +8,8 @@
 
 UStatComponent::UStatComponent()
 	:
-	Super::UActorComponent()
+	Super::UActorComponent(),
+	Stats()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 	Stats[static_cast<uint8>(ECustomStatType::HP)] = NewObject<UHPStat>();

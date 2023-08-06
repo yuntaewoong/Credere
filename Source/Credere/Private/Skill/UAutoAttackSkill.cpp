@@ -3,3 +3,7 @@
 
 #include "Skill/UAutoAttackSkill.h"
 
+UAutoAttackSkill::UAutoAttackSkill()
+	:
+	Super::UBaseSkill()
+{}

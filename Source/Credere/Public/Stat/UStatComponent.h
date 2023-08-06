@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Enum/ECustomStatEnum.h"
+#include "Enum/ECustomStatType.h"
 #include "UStatComponent.generated.h"
 
 //UENUM()

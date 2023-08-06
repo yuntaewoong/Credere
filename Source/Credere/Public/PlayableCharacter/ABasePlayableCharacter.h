@@ -31,6 +31,9 @@ private:
 	class UStatComponent* StatComponent;
 
 	UPROPERTY(VisibleAnywhere)
+	class USkillComponent* SkillComponent;
+
+	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* CameraBoom;
 
 	UPROPERTY(VisibleAnywhere)
