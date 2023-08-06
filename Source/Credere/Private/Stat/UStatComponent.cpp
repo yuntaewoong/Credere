@@ -2,33 +2,30 @@
 
 
 #include "Stat\UStatComponent.h"
+#include "Stat\UBaseStat.h"
+#include "Stat\UHPStat.h"
 
-// Sets default values for this component's properties
+
 UStatComponent::UStatComponent()
+	:
+	Super::UActorComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
+	Stats[static_cast<uint8>(ECustomStatType::HP)] = NewObject<UHPStat>();
 }
-
-
-// Called when the game starts
 void UStatComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
 
-// Called every frame
 void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
 
-	// ...
+void UStatComponent::SetStatActive(ECustomStatType customStatType, bool isActive)
+{
+	Stats[static_cast<uint8>(customStatType)]->SetActive(isActive);
 }
 

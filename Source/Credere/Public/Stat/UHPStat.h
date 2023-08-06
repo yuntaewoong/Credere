@@ -13,5 +13,13 @@ UCLASS()
 class CREDERE_API UHPStat : public UBaseStat
 {
 	GENERATED_BODY()
-	
+public:
+	UHPStat();
+	void AddHP(uint16 hp);
+	void SubtractHP(uint16 hp);
+private:
+	static const uint16 MINIMUM_HP = 0u;
+	uint16 Hp;
+	uint16 MaxHp;
+
 };

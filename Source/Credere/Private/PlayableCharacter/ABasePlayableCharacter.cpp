@@ -3,6 +3,7 @@
 
 #include "PlayableCharacter/ABasePlayableCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Stat\UStatComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "InputMappingContext.h"
@@ -16,7 +17,8 @@
 ABasePlayableCharacter::ABasePlayableCharacter()
 	:   
 	Super::ACharacter(),
-	Navigation(nullptr),
+	NavigationComponent(nullptr),
+	StatComponent(nullptr),
 	CameraBoom(nullptr),
 	FollowCamera(nullptr),
 	DefaultMappingContext(nullptr),
@@ -25,10 +27,12 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	LookAction(nullptr)
 {
 	{//Navigation Component	부착
-		Navigation = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
-		Navigation->SetupAttachment(RootComponent);
+		NavigationComponent = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
+		NavigationComponent->SetupAttachment(RootComponent);
 	}
-	
+	{//Stat Component 부착
+		StatComponent = CreateDefaultSubobject<UStatComponent>(TEXT("Stat"));
+	}
 	{//mapping context 로드
 		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));
 		if (mappingContext.Succeeded())
@@ -120,7 +124,7 @@ void ABasePlayableCharacter::BeginPlay()
 void ABasePlayableCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Navigation->SetGoal(FVector(10000.0,0.0,0.0));
+	NavigationComponent->SetGoal(FVector(10000.0,0.0,0.0));
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
 	{
 		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 
@@ -128,11 +132,11 @@ void ABasePlayableCharacter::Tick(float DeltaTime)
 		{//GameInstance의  PlayableCharacterSubsystem에 본인이 리더인지 물어봄
 			if(playableCharacterSubsystem->IsLeader(*this))
 			{//리더일때만 네비게이션 컴포넌트 On
-				Navigation->SetActive(true);	
+				NavigationComponent->SetActive(true);	
 			}
 			else
 			{
-				Navigation->SetActive(false);
+				NavigationComponent->SetActive(false);
 			}
 		}
 	}

@@ -25,7 +25,10 @@ private:
 	void Look(const FInputActionValue& Value);
 private:
 	UPROPERTY(VisibleAnywhere)
-	class UNavigationComponent* Navigation;
+	class UNavigationComponent* NavigationComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	class UStatComponent* StatComponent;
 
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* CameraBoom;
