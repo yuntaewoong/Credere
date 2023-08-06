@@ -16,3 +16,8 @@ void UBaseStat::SetActive(bool isActive)
 {
 	bIsActive = isActive;
 }
+
+bool UBaseStat::IsActive() const
+{
+	return bIsActive;
+}

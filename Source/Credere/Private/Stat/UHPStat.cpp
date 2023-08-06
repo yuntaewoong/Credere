@@ -13,6 +13,11 @@ UHPStat::UHPStat()
 
 void UHPStat::AddHP(uint16 hp)
 {
+	if(!bIsActive)
+	{
+		UE_LOG(LogCustomStat,Warning,TEXT("Stat is not Active"));
+		return;
+	}
 	if(Hp + hp > MaxHp)
 	{
 		UE_LOG(LogCustomStat,Warning,TEXT("Exceed Max Hp Value"));
@@ -23,10 +28,20 @@ void UHPStat::AddHP(uint16 hp)
 
 void UHPStat::SubtractHP(uint16 hp)
 {
+	if(!bIsActive)
+	{
+		UE_LOG(LogCustomStat,Warning,TEXT("Stat is not Active"));
+		return;
+	}
 	if (Hp - hp < MINIMUM_HP)
 	{
 		UE_LOG(LogCustomStat,Warning,TEXT("Cannot Set HP under MINIMUM_HP"));
 		return;
 	}
 	Hp -= hp;
+}
+
+uint16 UHPStat::GetHP() const
+{
+	return Hp;
 }

@@ -17,6 +17,7 @@ public:
 	UHPStat();
 	void AddHP(uint16 hp);
 	void SubtractHP(uint16 hp);
+	uint16 GetHP() const;
 private:
 	static const uint16 MINIMUM_HP = 0u;
 	uint16 Hp;

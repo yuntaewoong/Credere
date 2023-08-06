@@ -31,6 +31,7 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	}
 	{//Stat Component 부착
 		StatComponent = CreateDefaultSubobject<UStatComponent>(TEXT("Stat"));
+		StatComponent->SetStatActive(ECustomStatType::HP,true);
 	}
 	{//mapping context 로드
 		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));

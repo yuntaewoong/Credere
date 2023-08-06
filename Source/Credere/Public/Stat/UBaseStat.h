@@ -17,6 +17,7 @@ class CREDERE_API UBaseStat : public UObject
 public:
 	UBaseStat();
 	void SetActive(bool isActive);
-private:
+	bool IsActive() const;
+protected:
 	bool bIsActive;
 };
