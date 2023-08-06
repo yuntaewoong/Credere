@@ -23,7 +23,6 @@ UNavigationComponent::UNavigationComponent()
 	{//Route Spline 생성
 		RouteSpline = CreateDefaultSubobject<USplineComponent>(TEXT("Route Spline"));
 		RouteSpline->bDrawDebug = true;
-		RouteSpline->SetupAttachment(this);
 	}
 	{//Route Spline Mesh 생성
 		static const ConstructorHelpers::FObjectFinder<UStaticMesh> splineStaticMesh(TEXT("StaticMesh'/Engine/BasicShapes/Cylinder.Cylinder'"));

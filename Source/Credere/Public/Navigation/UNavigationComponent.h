@@ -8,7 +8,7 @@
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class CREDERE_API UNavigationComponent : public USceneComponent
+class CREDERE_API UNavigationComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -24,10 +24,10 @@ public:
 	void SetGoal(FVector goal);
 
 private:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY()
 	class USplineComponent* RouteSpline;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY()
 	TArray<class USplineMeshComponent*> RouteSplineMeshes;
 
 	FVector GoalLocation;

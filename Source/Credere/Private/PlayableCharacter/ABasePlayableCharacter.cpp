@@ -28,7 +28,6 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 {
 	{//Navigation Component	부착
 		NavigationComponent = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
-		NavigationComponent->SetupAttachment(RootComponent);
 	}
 	{//Stat Component 부착
 		StatComponent = CreateDefaultSubobject<UStatComponent>(TEXT("Stat"));
