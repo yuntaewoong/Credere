@@ -27,8 +27,8 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UNavigationComponent* NavigationComponent;
 
-	UPROPERTY(VisibleAnywhere)
-	class UStatComponent* StatComponent;
+	UPROPERTY()
+	class AStatHolder* StatHolder;
 
 	UPROPERTY()
 	class ASkillHolder* SkillHolder;

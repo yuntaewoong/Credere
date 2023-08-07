@@ -2,13 +2,14 @@
 
 
 #include "Skill/UBaseSkill.h"
+
 DEFINE_LOG_CATEGORY(LogSkill);
 
 UBaseSkill::UBaseSkill()
 	:
-	Super::UObject()
+	Super::UObject(),
+	bIsActive(false)
 {}
-
 void UBaseSkill::SetActive(bool isActive)
 {
 	bIsActive = isActive;

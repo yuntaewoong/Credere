@@ -3,7 +3,7 @@
 
 #include "PlayableCharacter/ABasePlayableCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Stat\UStatComponent.h"
+#include "Stat\AStatHolder.h"
 #include "Skill\ASkillHolder.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -19,7 +19,7 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	:   
 	Super::ACharacter(),
 	NavigationComponent(nullptr),
-	StatComponent(nullptr),
+	StatHolder(nullptr),
 	SkillHolder(nullptr),
 	CameraBoom(nullptr),
 	FollowCamera(nullptr),
@@ -91,7 +91,7 @@ void ABasePlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	{//SKillHolder스폰
-		ASkillHolder* skillHolder = GetWorld()->SpawnActor<ASkillHolder>(
+		SkillHolder = GetWorld()->SpawnActor<ASkillHolder>(
 			GetActorLocation(),
 			GetActorRotation()
 		);
@@ -101,9 +101,21 @@ void ABasePlayableCharacter::BeginPlay()
 			EAttachmentRule::KeepRelative,
 			true
 		);
-		skillHolder->AttachToActor(this,attachmentRule);
+		SkillHolder->AttachToActor(this,attachmentRule);
 	}
-
+	{//StatHolder스폰
+		StatHolder = GetWorld()->SpawnActor<AStatHolder>(
+			GetActorLocation(),
+			GetActorRotation()
+		);
+		FAttachmentTransformRules attachmentRule(
+			EAttachmentRule::KeepRelative,
+			EAttachmentRule::KeepRelative,
+			EAttachmentRule::KeepRelative,
+			true
+		);
+		StatHolder->AttachToActor(this,attachmentRule);
+	}
 
 
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
