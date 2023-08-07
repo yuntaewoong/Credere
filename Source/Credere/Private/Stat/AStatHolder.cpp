@@ -14,6 +14,7 @@ AStatHolder::AStatHolder()
 {
 	Stats[static_cast<uint8>(ECustomStatType::HP)] = NewObject<UHPStat>();
 	emptyComponent = CreateDefaultSubobject<USceneComponent>(TEXT("EmptySceneComponent"));
+	SetRootComponent(emptyComponent);
 }
 void AStatHolder::BeginPlay()
 {

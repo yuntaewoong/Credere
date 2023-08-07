@@ -24,8 +24,8 @@ private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 private:
-	UPROPERTY(VisibleAnywhere)
-	class UNavigationComponent* NavigationComponent;
+	UPROPERTY()
+	class ANavigation* Navigation;
 
 	UPROPERTY()
 	class AStatHolder* StatHolder;

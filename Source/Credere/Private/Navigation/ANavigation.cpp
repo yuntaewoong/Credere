@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Navigation\UNavigationComponent.h"
+#include "Navigation\ANavigation.h"
 #include "Runtime/NavigationSystem/Public/NavigationSystem.h"
 #include "Runtime/NavigationSystem/Public/NavigationPath.h"
 #include "Components/SplineComponent.h"
 #include "Components/SplineMeshComponent.h"
 
 
-UNavigationComponent::UNavigationComponent()
+ANavigation::ANavigation()
 	:
 	GoalLocation(FVector::Zero()),
 	RouteSpline(nullptr),
@@ -18,7 +18,7 @@ UNavigationComponent::UNavigationComponent()
 	RouteZHeight(40.0),
 	bIsActive(false)
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = true;
 
 	{//Route Spline 생성
 		RouteSpline = CreateDefaultSubobject<USplineComponent>(TEXT("Route Spline"));
@@ -44,20 +44,19 @@ UNavigationComponent::UNavigationComponent()
 		}
 	}
 }
-void UNavigationComponent::BeginPlay()
+void ANavigation::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-void UNavigationComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void ANavigation::Tick(float DeltaTime)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::Tick(DeltaTime);
 	UpdateSplineMeshes();
 }
 
-void UNavigationComponent::SetActive(bool bNewActive, bool bReset)
-{//네비게이션 컴포넌트를 비활성화할때 Spline Mesh 렌더여부와 길찾기 여부 전환
-	Super::SetActive(bNewActive,bReset);
+void ANavigation::SetActive(bool bNewActive)
+{//네비게이션 액터를 비활성화할때 Spline Mesh 렌더여부와 길찾기 여부 전환
 	bIsActive = bNewActive;
 	for(auto splineMesh : RouteSplineMeshes)
 	{	
@@ -65,20 +64,22 @@ void UNavigationComponent::SetActive(bool bNewActive, bool bReset)
 	}
 }
 
-void UNavigationComponent::SetGoal(FVector goal)
+void ANavigation::SetGoal(FVector goal)
 {
 	GoalLocation = goal;
 }
 
 //경로정보를 기반으로 새로운 Spline Mesh업데이트
-void UNavigationComponent::UpdateSplineMeshes()
+void ANavigation::UpdateSplineMeshes()
 {
 	if(!bIsActive)//컴포넌트가 활성화되지 않으면 길찾기 연산 x
+		return;
+	if(!GetAttachParentActor())//부모 액터가 설정되지 않았다면 길찾기 연산 x
 		return;
 	const UNavigationSystemV1* navSys = UNavigationSystemV1::GetCurrent(GetWorld());
 	const UNavigationPath* path = navSys->FindPathToLocationSynchronously(
 		GetWorld(),
-		GetOwner()->GetActorLocation(),
+		GetAttachParentActor()->GetActorLocation(),
 		GoalLocation,
 		NULL
 	);

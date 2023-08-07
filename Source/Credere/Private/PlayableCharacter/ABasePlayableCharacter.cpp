@@ -12,13 +12,13 @@
 #include "EnhancedInputSubsystems.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameInstanceSubsystem\UPlayableCharacterSubsystem.h"
-#include "Navigation\UNavigationComponent.h"
+#include "Navigation\ANavigation.h"
 #include "AIController\APartnerAIController.h"
 
 ABasePlayableCharacter::ABasePlayableCharacter()
 	:   
 	Super::ACharacter(),
-	NavigationComponent(nullptr),
+	Navigation(nullptr),
 	StatHolder(nullptr),
 	SkillHolder(nullptr),
 	CameraBoom(nullptr),
@@ -28,9 +28,6 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	MoveAction(nullptr),
 	LookAction(nullptr)
 {
-	{//Navigation Component	부착
-		NavigationComponent = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
-	}
 	{//mapping context 로드
 		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));
 		if (mappingContext.Succeeded())
@@ -90,34 +87,29 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 void ABasePlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	{//Navigation
+		Navigation = GetWorld()->SpawnActor<ANavigation>(
+			GetActorLocation(),
+			GetActorRotation()
+		);
+		Navigation->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
+	}
+
 	{//SKillHolder스폰
 		SkillHolder = GetWorld()->SpawnActor<ASkillHolder>(
 			GetActorLocation(),
 			GetActorRotation()
 		);
-		FAttachmentTransformRules attachmentRule(
-			EAttachmentRule::KeepRelative,
-			EAttachmentRule::KeepRelative,
-			EAttachmentRule::KeepRelative,
-			true
-		);
-		SkillHolder->AttachToActor(this,attachmentRule);
+		SkillHolder->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
+		SkillHolder->SetSkillActive(ESkillType::AUTO_ATTACK,true);
 	}
 	{//StatHolder스폰
 		StatHolder = GetWorld()->SpawnActor<AStatHolder>(
 			GetActorLocation(),
 			GetActorRotation()
 		);
-		FAttachmentTransformRules attachmentRule(
-			EAttachmentRule::KeepRelative,
-			EAttachmentRule::KeepRelative,
-			EAttachmentRule::KeepRelative,
-			true
-		);
-		StatHolder->AttachToActor(this,attachmentRule);
+		StatHolder->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
 	}
-
-
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
 	{
 		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 
@@ -149,7 +141,7 @@ void ABasePlayableCharacter::BeginPlay()
 void ABasePlayableCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	NavigationComponent->SetGoal(FVector(10000.0,0.0,0.0));
+	Navigation->SetGoal(FVector(10000.0,0.0,0.0));
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
 	{
 		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 
@@ -157,11 +149,11 @@ void ABasePlayableCharacter::Tick(float DeltaTime)
 		{//GameInstance의  PlayableCharacterSubsystem에 본인이 리더인지 물어봄
 			if(playableCharacterSubsystem->IsLeader(*this))
 			{//리더일때만 네비게이션 컴포넌트 On
-				NavigationComponent->SetActive(true);	
+				Navigation->SetActive(true);	
 			}
 			else
 			{
-				NavigationComponent->SetActive(false);
+				Navigation->SetActive(false);
 			}
 		}
 	}

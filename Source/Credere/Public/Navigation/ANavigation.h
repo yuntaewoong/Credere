@@ -3,31 +3,31 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
-#include "UNavigationComponent.generated.h"
+#include "GameFramework/Actor.h"
+#include "ANavigation.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class CREDERE_API UNavigationComponent : public UActorComponent
+UCLASS()
+class CREDERE_API ANavigation : public AActor
 {
 	GENERATED_BODY()
 
 public:	
-	UNavigationComponent();
+	ANavigation();
 
 protected:
 	virtual void BeginPlay() override;
 
 public:	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	virtual void SetActive(bool bNewActive,bool bReset = false) override;
+	virtual void Tick(float DeltaTime) override;
+	void SetActive(bool bNewActive);
 	void SetGoal(FVector goal);
 
 private:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	class USplineComponent* RouteSpline;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TArray<class USplineMeshComponent*> RouteSplineMeshes;
 
 	FVector GoalLocation;
