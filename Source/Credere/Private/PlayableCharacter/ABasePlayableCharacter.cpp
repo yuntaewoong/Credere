@@ -4,7 +4,7 @@
 #include "PlayableCharacter/ABasePlayableCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Stat\UStatComponent.h"
-#include "Skill\USkillComponent.h"
+#include "Skill\ASkillHolder.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "InputMappingContext.h"
@@ -20,7 +20,7 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	Super::ACharacter(),
 	NavigationComponent(nullptr),
 	StatComponent(nullptr),
-	SkillComponent(nullptr),
+	SkillHolder(nullptr),
 	CameraBoom(nullptr),
 	FollowCamera(nullptr),
 	DefaultMappingContext(nullptr),
@@ -30,14 +30,6 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 {
 	{//Navigation Component	부착
 		NavigationComponent = CreateDefaultSubobject<UNavigationComponent>(TEXT("Navigation"));
-	}
-	{//Stat Component 부착
-		StatComponent = CreateDefaultSubobject<UStatComponent>(TEXT("Stat"));
-		StatComponent->SetStatActive(ECustomStatType::HP,true);
-	}
-	{//Skill Component 부착
-		SkillComponent = CreateDefaultSubobject<USkillComponent>(TEXT("Skill"));
-		SkillComponent->SetStatActive(ESkillType::AUTO_ATTACK,true);
 	}
 	{//mapping context 로드
 		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));
@@ -98,6 +90,21 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 void ABasePlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	{//SKillHolder스폰
+		ASkillHolder* skillHolder = GetWorld()->SpawnActor<ASkillHolder>(
+			GetActorLocation(),
+			GetActorRotation()
+		);
+		FAttachmentTransformRules attachmentRule(
+			EAttachmentRule::KeepRelative,
+			EAttachmentRule::KeepRelative,
+			EAttachmentRule::KeepRelative,
+			true
+		);
+		skillHolder->AttachToActor(this,attachmentRule);
+	}
+
+
 
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
 	{

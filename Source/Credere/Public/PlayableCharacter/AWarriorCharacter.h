@@ -16,7 +16,7 @@ class CREDERE_API AWarriorCharacter : public ABasePlayableCharacter
 public:
 	AWarriorCharacter();
 	virtual void Tick(float DeltaTime) override;
-	
+	virtual void BeginPlay() override;
 private:
 	double SkeletalMeshZAdjust;
 	double SkeletalMeshYawAdjust;

@@ -2,6 +2,7 @@
 
 
 #include "PlayableCharacter/AWarriorCharacter.h"
+#include "Skill\ASkillHolder.h"
 
 AWarriorCharacter::AWarriorCharacter()
 	: 
@@ -28,4 +29,9 @@ AWarriorCharacter::AWarriorCharacter()
 void AWarriorCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AWarriorCharacter::BeginPlay()
+{
+	Super::BeginPlay();
 }
