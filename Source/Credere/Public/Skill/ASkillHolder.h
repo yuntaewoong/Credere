@@ -19,9 +19,15 @@ public:
 protected:
 	virtual void BeginPlay() override;
 public:	
+	virtual void Tick(float DeltaTime) override;
 	void SetSkillActive(ESkillType customSkillType,bool isActive);
+	void SetStatHolder(const class AStatHolder* statHolder);
 private:
 	UPROPERTY(VisibleAnywhere)
 	class USphereComponent* SphereComponent;
-	TStaticArray<class UBaseSkill*,static_cast<uint32>(ESkillType::ITEM_NUM)> Skills;
+
+	UPROPERTY(VisibleAnywhere)
+	class UBaseSkill* Skills[static_cast<uint8>(ESkillType::ITEM_NUM)];
+
+	const class AStatHolder* StatHolder;
 };

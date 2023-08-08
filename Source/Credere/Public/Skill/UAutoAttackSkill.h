@@ -18,4 +18,5 @@ public:
 	virtual void Tick(float Deltatime) override;
 	virtual void BeginPlay() override;
 private:
+	
 };

@@ -89,27 +89,28 @@ void ABasePlayableCharacter::BeginPlay()
 	Super::BeginPlay();
 	{//Navigation
 		Navigation = GetWorld()->SpawnActor<ANavigation>(
-			GetActorLocation(),
-			GetActorRotation()
+			FVector::ZeroVector,
+			FRotator::ZeroRotator
 		);
 		Navigation->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
 	}
-
-	{//SKillHolder스폰
-		SkillHolder = GetWorld()->SpawnActor<ASkillHolder>(
-			GetActorLocation(),
-			GetActorRotation()
-		);
-		SkillHolder->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
-		SkillHolder->SetSkillActive(ESkillType::AUTO_ATTACK,true);
-	}
 	{//StatHolder스폰
 		StatHolder = GetWorld()->SpawnActor<AStatHolder>(
-			GetActorLocation(),
-			GetActorRotation()
+			FVector::ZeroVector,
+			FRotator::ZeroRotator
 		);
 		StatHolder->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
 	}
+	{//SKillHolder스폰
+		SkillHolder = GetWorld()->SpawnActor<ASkillHolder>(
+			FVector::ZeroVector,
+			FRotator::ZeroRotator
+		);
+		SkillHolder->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
+		SkillHolder->SetSkillActive(ESkillType::AUTO_ATTACK,true);
+		SkillHolder->SetStatHolder(StatHolder);//스킬홀더가 사용할 스탯홀더에 대한 포인터 전달
+	}
+	
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
 	{
 		if (UPlayableCharacterSubsystem* playableCharacterSubsystem = 

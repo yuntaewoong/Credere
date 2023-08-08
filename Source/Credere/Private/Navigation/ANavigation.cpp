@@ -22,6 +22,7 @@ ANavigation::ANavigation()
 
 	{//Route Spline 생성
 		RouteSpline = CreateDefaultSubobject<USplineComponent>(TEXT("Route Spline"));
+		SetRootComponent(RouteSpline);
 		RouteSpline->bDrawDebug = true;
 	}
 	{//Route Spline Mesh 생성

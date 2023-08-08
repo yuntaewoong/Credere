@@ -17,13 +17,18 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
 public:	
 	void SetStatActive(ECustomStatType customStatType,bool isActive);
-
+	class UHPStat* GetHpStat() const;
+	class UAttackRadiusStat* GetAttackRadiusStat() const;
 private:
 	UPROPERTY(VisibleAnywhere)
-	USceneComponent* emptyComponent;
-	TStaticArray<class UBaseStat*,static_cast<uint32>(ECustomStatType::ITEM_NUM)> Stats;
+	USceneComponent* EmptyComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	class UHPStat* HpStat;
 	
+	UPROPERTY(VisibleAnywhere)
+	class UAttackRadiusStat* AttackRadiusStat;
+
 };

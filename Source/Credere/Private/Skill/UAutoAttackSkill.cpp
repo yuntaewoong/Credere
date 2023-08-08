@@ -18,5 +18,5 @@ void UAutoAttackSkill::Tick(float Deltatime)
 
 void UAutoAttackSkill::BeginPlay()
 {
-	//SphereComponent->SetupAttachment(OwnerCharacter->GetRootComponent());
+	
 }

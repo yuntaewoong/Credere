@@ -20,6 +20,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
+
+protected:
+	UPROPERTY()
+	class AStatHolder* StatHolder;
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
@@ -28,11 +32,8 @@ private:
 	class ANavigation* Navigation;
 
 	UPROPERTY()
-	class AStatHolder* StatHolder;
-
-	UPROPERTY()
 	class ASkillHolder* SkillHolder;
-
+	
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* CameraBoom;
 

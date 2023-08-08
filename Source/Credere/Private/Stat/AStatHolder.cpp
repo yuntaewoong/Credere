@@ -4,17 +4,21 @@
 #include "Stat\AStatHolder.h"
 #include "Stat\UBaseStat.h"
 #include "Stat\UHPStat.h"
+#include "Stat\UAttackRadiusStat.h"
 
 
 AStatHolder::AStatHolder()
 	:
 	Super::AActor(),
-	emptyComponent(nullptr),
-	Stats()
+	EmptyComponent(nullptr),
+	HpStat(nullptr),
+	AttackRadiusStat(nullptr)
 {
-	Stats[static_cast<uint8>(ECustomStatType::HP)] = NewObject<UHPStat>();
-	emptyComponent = CreateDefaultSubobject<USceneComponent>(TEXT("EmptySceneComponent"));
-	SetRootComponent(emptyComponent);
+	PrimaryActorTick.bCanEverTick = true;//Tick On
+	EmptyComponent = CreateDefaultSubobject<USceneComponent>(TEXT("EmptySceneComponent"));
+	HpStat = CreateDefaultSubobject<UHPStat>(TEXT("HP Stat"));
+	AttackRadiusStat = CreateDefaultSubobject<UAttackRadiusStat>(TEXT("Attack Stat"));
+	SetRootComponent(EmptyComponent);
 }
 void AStatHolder::BeginPlay()
 {
@@ -23,6 +27,15 @@ void AStatHolder::BeginPlay()
 
 void AStatHolder::SetStatActive(ECustomStatType customStatType, bool isActive)
 {
-	Stats[static_cast<uint8>(customStatType)]->SetActive(isActive);
+	//Stats[static_cast<uint8>(customStatType)]->SetActive(isActive);
 }
 
+UHPStat* AStatHolder::GetHpStat() const
+{
+	return HpStat;
+}
+
+UAttackRadiusStat* AStatHolder::GetAttackRadiusStat() const
+{
+	return AttackRadiusStat;
+}
