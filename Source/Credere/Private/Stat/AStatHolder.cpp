@@ -25,10 +25,6 @@ void AStatHolder::BeginPlay()
 	Super::BeginPlay();
 }
 
-void AStatHolder::SetStatActive(ECustomStatType customStatType, bool isActive)
-{
-	//Stats[static_cast<uint8>(customStatType)]->SetActive(isActive);
-}
 
 UHPStat* AStatHolder::GetHpStat() const
 {

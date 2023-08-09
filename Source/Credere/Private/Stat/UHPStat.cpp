@@ -6,8 +6,9 @@
 UHPStat::UHPStat()
 	:
 	Super::UBaseStat(),
-	Hp(0u),
-	MaxHp(100u)
+	Hp(80u),
+	MaxHp(100u),
+	MinimumHp(0u)
 {
 }
 
@@ -33,7 +34,7 @@ void UHPStat::SubtractHP(uint16 hp)
 		UE_LOG(LogCustomStat,Warning,TEXT("Stat is not Active"));
 		return;
 	}
-	if (Hp - hp < MINIMUM_HP)
+	if (Hp - hp < MinimumHp)
 	{
 		UE_LOG(LogCustomStat,Warning,TEXT("Cannot Set HP under MINIMUM_HP"));
 		return;

@@ -10,13 +10,3 @@ UAutoAttackSkill::UAutoAttackSkill()
 	Super::UBaseSkill()
 {
 }
-
-void UAutoAttackSkill::Tick(float Deltatime)
-{
-	
-}
-
-void UAutoAttackSkill::BeginPlay()
-{
-	
-}

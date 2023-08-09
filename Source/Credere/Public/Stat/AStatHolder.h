@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Enum/ECustomStatType.h"
 #include "AStatHolder.generated.h"
 
 UCLASS()
@@ -18,7 +17,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 public:	
-	void SetStatActive(ECustomStatType customStatType,bool isActive);
+	//void SetStatActive(ECustomStatType customStatType,bool isActive);
 	class UHPStat* GetHpStat() const;
 	class UAttackRadiusStat* GetAttackRadiusStat() const;
 private:

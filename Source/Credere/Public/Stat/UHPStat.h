@@ -19,8 +19,7 @@ public:
 	void SubtractHP(uint16 hp);
 	uint16 GetHP() const;
 private:
-	static const uint16 MINIMUM_HP = 0u;
 	uint16 Hp;
 	uint16 MaxHp;
-
+	uint16 MinimumHp;
 };

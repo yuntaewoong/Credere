@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Enum\ESkillType.h"
 #include "ASkillHolder.generated.h"
 
 
@@ -20,14 +19,14 @@ protected:
 	virtual void BeginPlay() override;
 public:	
 	virtual void Tick(float DeltaTime) override;
-	void SetSkillActive(ESkillType customSkillType,bool isActive);
+	//void SetSkillActive(ESkillType customSkillType,bool isActive);
 	void SetStatHolder(const class AStatHolder* statHolder);
 private:
 	UPROPERTY(VisibleAnywhere)
 	class USphereComponent* SphereComponent;
 
 	UPROPERTY(VisibleAnywhere)
-	class UBaseSkill* Skills[static_cast<uint8>(ESkillType::ITEM_NUM)];
+	class UAutoAttackSkill* AutoAttackSkill;
 
 	const class AStatHolder* StatHolder;
 };

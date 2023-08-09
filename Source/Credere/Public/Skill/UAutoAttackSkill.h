@@ -15,8 +15,6 @@ class CREDERE_API UAutoAttackSkill : public UBaseSkill
 	GENERATED_BODY()
 public:
 	UAutoAttackSkill();
-	virtual void Tick(float Deltatime) override;
-	virtual void BeginPlay() override;
 private:
 	
 };

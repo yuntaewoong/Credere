@@ -107,7 +107,7 @@ void ABasePlayableCharacter::BeginPlay()
 			FRotator::ZeroRotator
 		);
 		SkillHolder->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
-		SkillHolder->SetSkillActive(ESkillType::AUTO_ATTACK,true);
+		//SkillHolder->SetSkillActive(ESkillType::AUTO_ATTACK,true);
 		SkillHolder->SetStatHolder(StatHolder);//스킬홀더가 사용할 스탯홀더에 대한 포인터 전달
 	}
 	
