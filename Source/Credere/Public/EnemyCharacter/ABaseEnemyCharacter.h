@@ -14,5 +14,14 @@ class CREDERE_API ABaseEnemyCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ABaseEnemyCharacter();
+protected:
+	virtual void BeginPlay() override;
+protected:
+	UPROPERTY()
+	class AStatHolder* StatHolder;
+private:
+	UPROPERTY()
+	class ASkillHolder* SkillHolder;
+
 
 };

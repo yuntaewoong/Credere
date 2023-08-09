@@ -39,6 +39,6 @@ void AArcherCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if(StatHolder)
 	{
-		StatHolder->GetAttackRadiusStat()->SetAttackRadius(48.f);
+		StatHolder->GetAttackRadiusStat()->SetAttackRadius(450.f);
 	}
 }

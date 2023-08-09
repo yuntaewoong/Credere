@@ -17,9 +17,11 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+    virtual void NotifyActorBeginOverlap(AActor *OtherActor) override;
+    virtual void NotifyActorEndOverlap(AActor *OtherActor) override;
+
 public:	
 	virtual void Tick(float DeltaTime) override;
-	//void SetSkillActive(ESkillType customSkillType,bool isActive);
 	void SetStatHolder(const class AStatHolder* statHolder);
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -29,4 +31,6 @@ private:
 	class UAutoAttackSkill* AutoAttackSkill;
 
 	const class AStatHolder* StatHolder;
+
+	const AActor* TargetingActor; 
 };

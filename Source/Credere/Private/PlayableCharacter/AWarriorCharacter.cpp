@@ -33,7 +33,7 @@ void AWarriorCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if(StatHolder)
 	{
-		StatHolder->GetAttackRadiusStat()->SetAttackRadius(24.f);
+		StatHolder->GetAttackRadiusStat()->SetAttackRadius(175.f);
 	}
 }
 

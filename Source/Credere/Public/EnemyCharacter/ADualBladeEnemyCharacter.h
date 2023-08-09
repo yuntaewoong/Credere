@@ -15,6 +15,8 @@ class CREDERE_API ADualBladeEnemyCharacter : public ABaseEnemyCharacter
 	GENERATED_BODY()
 public:
 	ADualBladeEnemyCharacter();
+protected:
+	virtual void Tick(float DeltaTime) override;
 private:
 	double SkeletalMeshZAdjust;
 	double SkeletalMeshYawAdjust;

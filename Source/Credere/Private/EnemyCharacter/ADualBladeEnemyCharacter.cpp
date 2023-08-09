@@ -2,6 +2,8 @@
 
 
 #include "EnemyCharacter/ADualBladeEnemyCharacter.h"
+#include "Stat\AStatHolder.h"
+#include "Stat\UAttackRadiusStat.h"
 
 ADualBladeEnemyCharacter::ADualBladeEnemyCharacter()
 	:
@@ -25,4 +27,13 @@ ADualBladeEnemyCharacter::ADualBladeEnemyCharacter()
 
 	GetMesh()->AddRelativeLocation(FVector(0.0, 0.0, SkeletalMeshZAdjust));
 	GetMesh()->AddRelativeRotation(FQuat(FRotator(0.0,SkeletalMeshYawAdjust,0.0)));
+}
+
+void ADualBladeEnemyCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if(StatHolder)
+	{
+		StatHolder->GetAttackRadiusStat()->SetAttackRadius(175.f);
+	}
 }
