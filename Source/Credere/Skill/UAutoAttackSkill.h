@@ -15,6 +15,7 @@ class CREDERE_API UAutoAttackSkill : public UBaseSkill
 	GENERATED_BODY()
 public:
 	UAutoAttackSkill();
+	void Attack(class AActor* attacker, class AActor* attackTarget);
 private:
 	
 };

@@ -7,8 +7,14 @@ public class Credere : ModuleRules
 	public Credere(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] 
+        PrivateIncludePaths.AddRange
+		(
+			new string[]
+			{
+				"Credere",
+			}
+		);
+        PublicDependencyModuleNames.AddRange(new string[] 
 			{ 
 				"Core",
 				"CoreUObject",

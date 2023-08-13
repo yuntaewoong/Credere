@@ -17,7 +17,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 public:	
-	//void SetStatActive(ECustomStatType customStatType,bool isActive);
 	class UHPStat* GetHpStat() const;
 	class UAttackRadiusStat* GetAttackRadiusStat() const;
 private:
