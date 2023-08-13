@@ -28,6 +28,6 @@ public:
 	bool ChangeCharacterBackward();
 private:
 	static const uint8 MAX_PLAYER_NUM = 3;
-	TArray<class ABasePlayableCharacter*> PlayableCharacters;
-	const class ABasePlayableCharacter* Leader;
+	TArray<TObjectPtr<class ABasePlayableCharacter>> PlayableCharacters;
+	TObjectPtr<const class ABasePlayableCharacter> Leader;
 };

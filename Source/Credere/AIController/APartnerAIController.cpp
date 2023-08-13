@@ -20,13 +20,13 @@ APartnerAIController::APartnerAIController()
 	static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTObject(TEXT("BehaviorTree'/Game/AI/Partner/PartnerBT.PartnerBT'"));
 	if (!BTObject.Succeeded())
 		UE_LOG(LogController,Error,TEXT("PartnerBT Not Loaded"));
-	behaviorTree = BTObject.Object;
+	BehaviorTree = BTObject.Object;
 
 	//블랙보드 로드
 	static ConstructorHelpers::FObjectFinder<UBlackboardData> BBObject(TEXT("BlackboardData'/Game/AI/Partner/PartnerBB.PartnerBB'"));
 	if (!BBObject.Succeeded())
 		UE_LOG(LogController,Error,TEXT("PartnerBB Not Loaded"));
-	blackBoardData = BBObject.Object;
+	BlackBoardData = BBObject.Object;
 }
 
 void APartnerAIController::Tick(float DeltaTime)

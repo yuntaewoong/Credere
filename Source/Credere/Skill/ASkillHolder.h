@@ -25,12 +25,12 @@ public:
 	void SetStatHolder(const class AStatHolder* statHolder);
 private:
 	UPROPERTY(VisibleAnywhere)
-	class USphereComponent* SphereComponent;
+	TObjectPtr<class USphereComponent> SphereComponent;
 
 	UPROPERTY(VisibleAnywhere)
-	class UAutoAttackSkill* AutoAttackSkill;
+	TObjectPtr<class UAutoAttackSkill> AutoAttackSkill;
 
-	const class AStatHolder* StatHolder;
+	TObjectPtr<const class AStatHolder> StatHolder;
 
-	const AActor* TargetingActor; 
+	TObjectPtr<const AActor> TargetingActor; 
 };

@@ -23,32 +23,32 @@ public:
 
 protected:
 	UPROPERTY()
-	class AStatHolder* StatHolder;
+	TObjectPtr<class AStatHolder> StatHolder;
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 private:
 	UPROPERTY()
-	class ANavigation* Navigation;
+	TObjectPtr<class ANavigation> Navigation;
 
 	UPROPERTY()
-	class ASkillHolder* SkillHolder;
+	TObjectPtr<class ASkillHolder> SkillHolder;
 	
 	UPROPERTY(VisibleAnywhere)
-	class USpringArmComponent* CameraBoom;
+	TObjectPtr<class USpringArmComponent> CameraBoom;
 
 	UPROPERTY(VisibleAnywhere)
-	class UCameraComponent* FollowCamera;
+	TObjectPtr<class UCameraComponent> FollowCamera;
 
 	UPROPERTY()
-	class UInputMappingContext* DefaultMappingContext;
+	TObjectPtr<class UInputMappingContext> DefaultMappingContext;
 
 	UPROPERTY()
-	class UInputAction* JumpAction;
+	TObjectPtr<class UInputAction> JumpAction;
 
 	UPROPERTY()
-	class UInputAction* MoveAction;
+	TObjectPtr<class UInputAction> MoveAction;
 
 	UPROPERTY()
-	class UInputAction* LookAction;
+	TObjectPtr<class UInputAction> LookAction;
 };

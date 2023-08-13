@@ -21,10 +21,10 @@ protected:
 	void LoadAssets(FString btLocation,FString bbLocation);
 protected:
 	UPROPERTY(VisibleAnywhere)
-	class UBehaviorTree* behaviorTree;
+	TObjectPtr<class UBehaviorTree> BehaviorTree;
 
 	UPROPERTY(VisibleAnywhere)
-	class UBlackboardData* blackBoardData;
+	TObjectPtr<class UBlackboardData> BlackBoardData;
 private:
 	void RunAI();
 	void StopAI();

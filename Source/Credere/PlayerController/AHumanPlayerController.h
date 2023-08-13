@@ -25,11 +25,11 @@ private:
 
 private:
 	UPROPERTY()
-	class UInputMappingContext* DefaultMappingContext;
+	TObjectPtr<class UInputMappingContext> DefaultMappingContext;
 
 	UPROPERTY()
-	class UInputAction* CharacterForwardChangeAction;
+	TObjectPtr<class UInputAction> CharacterForwardChangeAction;
 
 	UPROPERTY()
-	class UInputAction* CharacterBackwardChangeAction;
+	TObjectPtr<class UInputAction> CharacterBackwardChangeAction;
 };

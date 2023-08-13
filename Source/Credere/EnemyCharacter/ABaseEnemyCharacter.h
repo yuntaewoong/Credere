@@ -18,10 +18,10 @@ protected:
 	virtual void BeginPlay() override;
 protected:
 	UPROPERTY()
-	class AStatHolder* StatHolder;
+	TObjectPtr<class AStatHolder> StatHolder;
 private:
 	UPROPERTY()
-	class ASkillHolder* SkillHolder;
+	TObjectPtr<class ASkillHolder> SkillHolder;
 
 
 };

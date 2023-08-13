@@ -9,11 +9,9 @@
 ABaseAIController::ABaseAIController()
 	:
 	Super::AAIController(),
-	behaviorTree(nullptr),
-	blackBoardData(nullptr)
-{
-
-}
+	BehaviorTree(nullptr),
+	BlackBoardData(nullptr)
+{}
 
 void ABaseAIController::OnPossess(APawn* InPawn)
 {
@@ -31,9 +29,9 @@ void ABaseAIController::OnUnPossess()
 void ABaseAIController::RunAI()
 {
 	UBlackboardComponent* bbComp = Blackboard;
-	if (UseBlackboard(blackBoardData,bbComp))
+	if (UseBlackboard(BlackBoardData,bbComp))
 	{
-		if(!RunBehaviorTree(behaviorTree))
+		if(!RunBehaviorTree(BehaviorTree))
 		{
 			UE_LOG(LogController,Error,TEXT("RunBehaviorTree Not Called"));
 		}

@@ -12,7 +12,7 @@ DEFINE_LOG_CATEGORY(LogGameInstance);
 UPlayableCharacterSubsystem::UPlayableCharacterSubsystem()
 	:
 	Super::UGameInstanceSubsystem(),
-	PlayableCharacters(TArray<ABasePlayableCharacter*>()),
+	PlayableCharacters(TArray<TObjectPtr<ABasePlayableCharacter>>()),
 	Leader(nullptr)
 {
 	PlayableCharacters.Reserve(MAX_PLAYER_NUM);

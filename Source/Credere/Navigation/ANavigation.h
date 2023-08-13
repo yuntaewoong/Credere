@@ -22,21 +22,21 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	void SetActive(bool bNewActive);
 	void SetGoal(FVector goal);
-
+private:
+	void UpdateSplineMeshes();
 private:
 	UPROPERTY(VisibleAnywhere)
-	class USplineComponent* RouteSpline;
+	TObjectPtr<class USplineComponent> RouteSpline;
 
 	UPROPERTY(VisibleAnywhere)
-	TArray<class USplineMeshComponent*> RouteSplineMeshes;
+	TArray<TObjectPtr<class USplineMeshComponent>> RouteSplineMeshes;
 
 	FVector GoalLocation;
 	uint16 MaxNumOfSplinePoints;
 	double SplineMeshTickness;
 	double RouteZHeight;
 	bool bIsActive;
-private:
-	void UpdateSplineMeshes();
+
 
 		
 };

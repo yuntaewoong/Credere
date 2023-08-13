@@ -21,12 +21,12 @@ public:
 	class UAttackRadiusStat* GetAttackRadiusStat() const;
 private:
 	UPROPERTY(VisibleAnywhere)
-	USceneComponent* EmptyComponent;
+	TObjectPtr<USceneComponent> EmptyComponent;
 
 	UPROPERTY(VisibleAnywhere)
-	class UHPStat* HpStat;
+	TObjectPtr<class UHPStat> HpStat;
 	
 	UPROPERTY(VisibleAnywhere)
-	class UAttackRadiusStat* AttackRadiusStat;
+	TObjectPtr<class UAttackRadiusStat> AttackRadiusStat;
 
 };
