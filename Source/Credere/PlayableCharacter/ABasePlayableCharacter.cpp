@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Stat\AStatHolder.h"
 #include "Skill\ASkillHolder.h"
+#include "AbilitySystem\UCredereAbilitySystemComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "InputMappingContext.h"
@@ -21,6 +22,7 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	Navigation(nullptr),
 	StatHolder(nullptr),
 	SkillHolder(nullptr),
+	AbilitySystemComponent(nullptr),
 	CameraBoom(nullptr),
 	FollowCamera(nullptr),
 	DefaultMappingContext(nullptr),
@@ -70,6 +72,9 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 		GetCharacterMovement()->MaxWalkSpeed = 500.f;
 		GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 		GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
+	}
+	{//Ability System설정
+		AbilitySystemComponent = CreateDefaultSubobject<UCredereAbilitySystemComponent>(TEXT("Ability System"));
 	}
 	{//CameraBoom설정
 		CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));

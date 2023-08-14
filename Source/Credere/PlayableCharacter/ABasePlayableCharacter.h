@@ -33,6 +33,9 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<class ASkillHolder> SkillHolder;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<class UCredereAbilitySystemComponent> AbilitySystemComponent;
 	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class USpringArmComponent> CameraBoom;

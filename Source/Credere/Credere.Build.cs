@@ -23,7 +23,7 @@ public class Credere : ModuleRules
 				"EnhancedInput",
                 "NavigationSystem",
                 "AIModule",
-				"GameplayAbility",
+                "GameplayAbilities",
 				"GameplayTags",
                 "GameplayTasks"
             }
