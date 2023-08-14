@@ -9,9 +9,11 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class CREDERE_API UCredereGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
-	
+public:
+	UCredereGameplayAbility();
+
 };

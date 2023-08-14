@@ -3,3 +3,8 @@
 
 #include "UCredereGameplayAbility.h"
 
+UCredereGameplayAbility::UCredereGameplayAbility()
+    :
+    Super::UGameplayAbility()
+{}
+
