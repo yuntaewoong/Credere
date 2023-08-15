@@ -4,6 +4,7 @@
 #include "PlayableCharacter/ABasePlayableCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Stat\AStatHolder.h"
+#include "AbilitySystem\Abilities\UCredereGameplayAbility_jump.h"
 #include "Skill\ASkillHolder.h"
 #include "AbilitySystem\UCredereAbilitySystemComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -28,7 +29,9 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	DefaultMappingContext(nullptr),
 	JumpAction(nullptr),
 	MoveAction(nullptr),
-	LookAction(nullptr)
+	LookAction(nullptr),
+	JumpAbilitySpec(),
+	JumpAbilitySpecHandle()
 {
 	{//mapping context 로드
 		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));
@@ -98,6 +101,10 @@ void ABasePlayableCharacter::BeginPlay()
 			FRotator::ZeroRotator
 		);
 		Navigation->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
+	}
+	{//ASC
+		JumpAbilitySpec = FGameplayAbilitySpec(UCredereGameplayAbility_Jump::StaticClass(),1);
+		JumpAbilitySpecHandle =  AbilitySystemComponent->GiveAbility(JumpAbilitySpec);//점프 능력 부여
 	}
 	{//StatHolder스폰
 		StatHolder = GetWorld()->SpawnActor<AStatHolder>(
@@ -174,8 +181,8 @@ void ABasePlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 		UE_LOG(LogActor,Error,TEXT("PlayerInputComponent is null"));
 		return;
 	}
-	enhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
-	enhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+	enhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ABasePlayableCharacter::AbilityJump);
+	enhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ABasePlayableCharacter::StopAbilityJumping);
 	enhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABasePlayableCharacter::Move);
 	enhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABasePlayableCharacter::Look);
 }
@@ -207,5 +214,15 @@ void ABasePlayableCharacter::Look(const FInputActionValue& Value)
 	}
 	AddControllerYawInput(lookAxisVector.X);
 	AddControllerPitchInput(lookAxisVector.Y);
+}
+
+void ABasePlayableCharacter::AbilityJump()
+{
+	AbilitySystemComponent->TryActivateAbility(JumpAbilitySpecHandle);
+}
+
+void ABasePlayableCharacter::StopAbilityJumping()
+{
+	AbilitySystemComponent->CancelAbilityHandle(JumpAbilitySpecHandle);
 }
 

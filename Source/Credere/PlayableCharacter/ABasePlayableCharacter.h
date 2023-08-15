@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "GameplayAbilitySpec.h"
 #include "ABasePlayableCharacter.generated.h"
 
 UCLASS(Abstract)
@@ -27,6 +28,8 @@ protected:
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void AbilityJump();
+	void StopAbilityJumping();
 private:
 	UPROPERTY()
 	TObjectPtr<class ANavigation> Navigation;
@@ -54,4 +57,7 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<class UInputAction> LookAction;
+
+	FGameplayAbilitySpec JumpAbilitySpec;
+	FGameplayAbilitySpecHandle JumpAbilitySpecHandle;
 };
