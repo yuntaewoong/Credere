@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class CREDERE_API UCredereAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
