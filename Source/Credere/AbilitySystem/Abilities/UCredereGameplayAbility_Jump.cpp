@@ -48,7 +48,6 @@ void UCredereGameplayAbility_Jump::ActivateAbility(
 			character->Jump();
 		}
 	}
-	UE_LOG(LogAbilitySystemComponent,Warning,TEXT("Called Activate Jumping Ability"));
 	Super::ActivateAbility(Handle,ActorInfo,ActivationInfo,TriggerEventData);
 }
 
@@ -60,6 +59,5 @@ void UCredereGameplayAbility_Jump::EndAbility(
 	bool bWasCancelled
 )
 {
-	UE_LOG(LogAbilitySystemComponent,Warning,TEXT("Called End Jumping Ability"));
 	Super::EndAbility(Handle,ActorInfo,ActivationInfo,bReplicateEndAbility,bWasCancelled);
 }

@@ -2,9 +2,7 @@
 
 
 #include "PlayableCharacter/ABattleMageCharacter.h"
-#include "Stat\AStatHolder.h"
-#include "Stat\UHPStat.h"
-#include "Stat\UAttackRadiusStat.h"
+
 ABattleMageCharacter::ABattleMageCharacter()
 	:
 	Super::ABasePlayableCharacter(),
@@ -35,8 +33,4 @@ void ABattleMageCharacter::BeginPlay()
 void ABattleMageCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if(StatHolder)
-	{
-		StatHolder->GetAttackRadiusStat()->SetAttackRadius(175.f);
-	}
 }

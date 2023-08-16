@@ -6,5 +6,7 @@
 UCredereGameplayAbility::UCredereGameplayAbility()
     :
     Super::UGameplayAbility()
-{}
+{
+    InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
+}
 

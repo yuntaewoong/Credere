@@ -16,12 +16,7 @@ public:
 	ABaseEnemyCharacter();
 protected:
 	virtual void BeginPlay() override;
-protected:
-	UPROPERTY()
-	TObjectPtr<class AStatHolder> StatHolder;
 private:
-	UPROPERTY()
-	TObjectPtr<class ASkillHolder> SkillHolder;
 
 
 };

@@ -3,9 +3,7 @@
 
 #include "PlayableCharacter/ABasePlayableCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Stat\AStatHolder.h"
 #include "AbilitySystem\Abilities\UCredereGameplayAbility_jump.h"
-#include "Skill\ASkillHolder.h"
 #include "AbilitySystem\UCredereAbilitySystemComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -21,8 +19,6 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	:   
 	Super::ACharacter(),
 	Navigation(nullptr),
-	StatHolder(nullptr),
-	SkillHolder(nullptr),
 	AbilitySystemComponent(nullptr),
 	CameraBoom(nullptr),
 	FollowCamera(nullptr),
@@ -30,7 +26,6 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	JumpAction(nullptr),
 	MoveAction(nullptr),
 	LookAction(nullptr),
-	JumpAbilitySpec(),
 	JumpAbilitySpecHandle()
 {
 	{//mapping context 로드
@@ -103,24 +98,8 @@ void ABasePlayableCharacter::BeginPlay()
 		Navigation->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
 	}
 	{//ASC
-		JumpAbilitySpec = FGameplayAbilitySpec(UCredereGameplayAbility_Jump::StaticClass(),1);
-		JumpAbilitySpecHandle =  AbilitySystemComponent->GiveAbility(JumpAbilitySpec);//점프 능력 부여
-	}
-	{//StatHolder스폰
-		StatHolder = GetWorld()->SpawnActor<AStatHolder>(
-			FVector::ZeroVector,
-			FRotator::ZeroRotator
-		);
-		StatHolder->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
-	}
-	{//SKillHolder스폰
-		SkillHolder = GetWorld()->SpawnActor<ASkillHolder>(
-			FVector::ZeroVector,
-			FRotator::ZeroRotator
-		);
-		SkillHolder->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
-		//SkillHolder->SetSkillActive(ESkillType::AUTO_ATTACK,true);
-		SkillHolder->SetStatHolder(StatHolder);//스킬홀더가 사용할 스탯홀더에 대한 포인터 전달
+		FGameplayAbilitySpec jumpAbilitySpec(UCredereGameplayAbility_Jump::StaticClass(),1);
+		JumpAbilitySpecHandle =  AbilitySystemComponent->GiveAbility(jumpAbilitySpec);//점프 능력 부여
 	}
 	
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))
@@ -219,6 +198,7 @@ void ABasePlayableCharacter::Look(const FInputActionValue& Value)
 void ABasePlayableCharacter::AbilityJump()
 {
 	AbilitySystemComponent->TryActivateAbility(JumpAbilitySpecHandle);
+	
 }
 
 void ABasePlayableCharacter::StopAbilityJumping()

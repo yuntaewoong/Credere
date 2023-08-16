@@ -2,9 +2,6 @@
 
 
 #include "AArcherCharacter.h"
-#include "Stat\AStatHolder.h"
-#include "Stat\UHPStat.h"
-#include "Stat\UAttackRadiusStat.h"
 
 AArcherCharacter::AArcherCharacter()
 	:
@@ -37,8 +34,4 @@ void AArcherCharacter::BeginPlay()
 void AArcherCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if(StatHolder)
-	{
-		StatHolder->GetAttackRadiusStat()->SetAttackRadius(450.f);
-	}
 }

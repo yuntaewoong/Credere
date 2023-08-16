@@ -21,10 +21,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
-
-protected:
-	UPROPERTY()
-	TObjectPtr<class AStatHolder> StatHolder;
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
@@ -33,9 +29,6 @@ private:
 private:
 	UPROPERTY()
 	TObjectPtr<class ANavigation> Navigation;
-
-	UPROPERTY()
-	TObjectPtr<class ASkillHolder> SkillHolder;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class UCredereAbilitySystemComponent> AbilitySystemComponent;
@@ -58,6 +51,5 @@ private:
 	UPROPERTY()
 	TObjectPtr<class UInputAction> LookAction;
 
-	FGameplayAbilitySpec JumpAbilitySpec;
 	FGameplayAbilitySpecHandle JumpAbilitySpecHandle;
 };

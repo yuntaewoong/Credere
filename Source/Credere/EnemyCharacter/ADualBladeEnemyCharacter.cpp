@@ -2,8 +2,6 @@
 
 
 #include "EnemyCharacter/ADualBladeEnemyCharacter.h"
-#include "Stat\AStatHolder.h"
-#include "Stat\UAttackRadiusStat.h"
 
 ADualBladeEnemyCharacter::ADualBladeEnemyCharacter()
 	:
@@ -32,8 +30,4 @@ ADualBladeEnemyCharacter::ADualBladeEnemyCharacter()
 void ADualBladeEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if(StatHolder)
-	{
-		StatHolder->GetAttackRadiusStat()->SetAttackRadius(175.f);
-	}
 }
