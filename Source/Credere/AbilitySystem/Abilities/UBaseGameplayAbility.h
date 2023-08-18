@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Abilities\GameplayAbility.h"
-#include "UCredereGameplayAbility.generated.h"
+#include "UBaseGameplayAbility.generated.h"
 
 /**
  * 
  */
 UCLASS(Abstract)
-class CREDERE_API UCredereGameplayAbility : public UGameplayAbility
+class CREDERE_API UBaseGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
 public:
-	UCredereGameplayAbility();
+	UBaseGameplayAbility();
 
 };

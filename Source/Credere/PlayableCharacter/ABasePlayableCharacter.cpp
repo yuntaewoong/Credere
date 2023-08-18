@@ -3,7 +3,7 @@
 
 #include "PlayableCharacter/ABasePlayableCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "AbilitySystem\Abilities\UCredereGameplayAbility_jump.h"
+#include "AbilitySystem\Abilities\UGameplayAbility_jump.h"
 #include "AbilitySystem\UCredereAbilitySystemComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -98,7 +98,7 @@ void ABasePlayableCharacter::BeginPlay()
 		Navigation->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
 	}
 	{//ASC
-		FGameplayAbilitySpec jumpAbilitySpec(UCredereGameplayAbility_Jump::StaticClass(),1);
+		FGameplayAbilitySpec jumpAbilitySpec(UGameplayAbility_Jump::StaticClass(),1);
 		JumpAbilitySpecHandle =  AbilitySystemComponent->GiveAbility(jumpAbilitySpec);//점프 능력 부여
 	}
 	

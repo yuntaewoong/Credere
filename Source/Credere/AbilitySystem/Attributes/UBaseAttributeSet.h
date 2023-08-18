@@ -4,14 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
-#include "UCredereAttributeSet.generated.h"
+#include "UBaseAttributeSet.generated.h"
 
 /**
  * 
  */
 UCLASS(Abstract)
-class CREDERE_API UCredereAttributeSet : public UAttributeSet
+class CREDERE_API UBaseAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
-	
+public:
+	UBaseAttributeSet();
 };

@@ -1,16 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "UCredereGameplayAbility_Jump.h"
+#include "UGameplayAbility_Jump.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Abilities\Tasks\AbilityTask_WaitDelay.h"
 
-UCredereGameplayAbility_Jump::UCredereGameplayAbility_Jump()
+UGameplayAbility_Jump::UGameplayAbility_Jump()
 	:
-	Super::UCredereGameplayAbility()
+	Super::UBaseGameplayAbility()
 {}
 
-bool UCredereGameplayAbility_Jump::CanActivateAbility(
+bool UGameplayAbility_Jump::CanActivateAbility(
 	const FGameplayAbilitySpecHandle Handle,
 	const FGameplayAbilityActorInfo * ActorInfo,
 	const FGameplayTagContainer * SourceTags,
@@ -33,7 +34,7 @@ bool UCredereGameplayAbility_Jump::CanActivateAbility(
 	return !characterMovement->IsFalling();
 }
 
-void UCredereGameplayAbility_Jump::ActivateAbility(
+void UGameplayAbility_Jump::ActivateAbility(
 	const FGameplayAbilitySpecHandle Handle,
 	const FGameplayAbilityActorInfo* ActorInfo,
 	const FGameplayAbilityActivationInfo ActivationInfo,
@@ -48,10 +49,19 @@ void UCredereGameplayAbility_Jump::ActivateAbility(
 			character->Jump();
 		}
 	}
+	FTimerHandle myTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(myTimerHandle, FTimerDelegate::CreateLambda([&]()
+    {
+        EndAbility(Handle,ActorInfo,ActivationInfo,false,false);
+        GetWorld()->GetTimerManager().ClearTimer(myTimerHandle);
+    }),5.0f, false); 
+	UAbilityTask_WaitDelay* waitDelay = UAbilityTask_WaitDelay::WaitDelay(this,5.0f);
+	waitDelay->OnFinish.AddDynamic(this,&UGameplayAbility_Jump::Test);
+	waitDelay->ReadyForActivation();
 	Super::ActivateAbility(Handle,ActorInfo,ActivationInfo,TriggerEventData);
 }
 
-void UCredereGameplayAbility_Jump::EndAbility(
+void UGameplayAbility_Jump::EndAbility(
 	const FGameplayAbilitySpecHandle Handle,
 	const FGameplayAbilityActorInfo* ActorInfo,
 	const FGameplayAbilityActivationInfo ActivationInfo,
@@ -60,4 +70,9 @@ void UCredereGameplayAbility_Jump::EndAbility(
 )
 {
 	Super::EndAbility(Handle,ActorInfo,ActivationInfo,bReplicateEndAbility,bWasCancelled);
+}
+
+void UGameplayAbility_Jump::Test()
+{
+	UE_LOG(LogAbilitySystemComponent,Warning,TEXT("Wait Task Test"));
 }
