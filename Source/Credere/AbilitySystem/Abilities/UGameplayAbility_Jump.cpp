@@ -49,12 +49,6 @@ void UGameplayAbility_Jump::ActivateAbility(
 			character->Jump();
 		}
 	}
-	FTimerHandle myTimerHandle;
-	GetWorld()->GetTimerManager().SetTimer(myTimerHandle, FTimerDelegate::CreateLambda([&]()
-    {
-        EndAbility(Handle,ActorInfo,ActivationInfo,false,false);
-        GetWorld()->GetTimerManager().ClearTimer(myTimerHandle);
-    }),5.0f, false); 
 	UAbilityTask_WaitDelay* waitDelay = UAbilityTask_WaitDelay::WaitDelay(this,5.0f);
 	waitDelay->OnFinish.AddDynamic(this,&UGameplayAbility_Jump::Test);
 	waitDelay->ReadyForActivation();

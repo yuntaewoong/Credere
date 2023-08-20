@@ -3,7 +3,8 @@
 
 #include "PlayableCharacter/ABasePlayableCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "AbilitySystem\Abilities\UGameplayAbility_jump.h"
+#include "AbilitySystem\Abilities\UGameplayAbility_Jump.h"
+#include "AbilitySystem\Abilities\UGameplayAbility_AutoAttack.h"
 #include "AbilitySystem\UCredereAbilitySystemComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -26,7 +27,8 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	JumpAction(nullptr),
 	MoveAction(nullptr),
 	LookAction(nullptr),
-	JumpAbilitySpecHandle()
+	JumpAbilitySpecHandle(),
+	AutoAttackAbilitySpecHandle()
 {
 	{//mapping context 로드
 		static const ConstructorHelpers::FObjectFinder<UInputMappingContext> mappingContext(TEXT("InputMappingContext'/Game/Inputs/PlayerInputMappingContext.PlayerInputMappingContext'"));
@@ -100,6 +102,10 @@ void ABasePlayableCharacter::BeginPlay()
 	{//ASC
 		FGameplayAbilitySpec jumpAbilitySpec(UGameplayAbility_Jump::StaticClass(),1);
 		JumpAbilitySpecHandle =  AbilitySystemComponent->GiveAbility(jumpAbilitySpec);//점프 능력 부여
+
+		FGameplayAbilitySpec autoAttackAbilitySpec(UGameplayAbility_AutoAttack::StaticClass(),1);
+		AutoAttackAbilitySpecHandle =  AbilitySystemComponent->GiveAbility(autoAttackAbilitySpec);//자동공격 능력 부여
+		AbilitySystemComponent->TryActivateAbility(AutoAttackAbilitySpecHandle);
 	}
 	
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))

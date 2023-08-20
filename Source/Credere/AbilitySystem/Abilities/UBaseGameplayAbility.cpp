@@ -3,6 +3,8 @@
 
 #include "UBaseGameplayAbility.h"
 
+DEFINE_LOG_CATEGORY(LogGameplayAbility);
+
 UBaseGameplayAbility::UBaseGameplayAbility()
     :
     Super::UGameplayAbility()

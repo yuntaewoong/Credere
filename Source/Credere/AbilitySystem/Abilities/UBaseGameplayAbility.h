@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Abilities\GameplayAbility.h"
 #include "UBaseGameplayAbility.generated.h"
-
+DECLARE_LOG_CATEGORY_EXTERN(LogGameplayAbility, Log, All);
 /**
  * 
  */

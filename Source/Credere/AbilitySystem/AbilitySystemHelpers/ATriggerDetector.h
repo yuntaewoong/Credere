@@ -6,21 +6,27 @@
 #include "GameFramework/Actor.h"
 #include "ATriggerDetector.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(LogTriggerDetector, Log, All);
+
 UCLASS()
 class CREDERE_API ATriggerDetector : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ATriggerDetector();
-
+	
+	TObjectPtr<const AActor> GetOverlappedOpponent() const;
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	virtual void BeginPlay() override;
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+	virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
+private:
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<class USphereComponent> SphereComponent;
 
+	TObjectPtr<const AActor> OverlappedActor;
+
+	float DetectingRadius;
 };

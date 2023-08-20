@@ -52,4 +52,5 @@ private:
 	TObjectPtr<class UInputAction> LookAction;
 
 	FGameplayAbilitySpecHandle JumpAbilitySpecHandle;
+	FGameplayAbilitySpecHandle AutoAttackAbilitySpecHandle;
 };
