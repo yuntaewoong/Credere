@@ -49,9 +49,6 @@ void UGameplayAbility_Jump::ActivateAbility(
 			character->Jump();
 		}
 	}
-	UAbilityTask_WaitDelay* waitDelay = UAbilityTask_WaitDelay::WaitDelay(this,5.0f);
-	waitDelay->OnFinish.AddDynamic(this,&UGameplayAbility_Jump::Test);
-	waitDelay->ReadyForActivation();
 	Super::ActivateAbility(Handle,ActorInfo,ActivationInfo,TriggerEventData);
 }
 
@@ -66,7 +63,3 @@ void UGameplayAbility_Jump::EndAbility(
 	Super::EndAbility(Handle,ActorInfo,ActivationInfo,bReplicateEndAbility,bWasCancelled);
 }
 
-void UGameplayAbility_Jump::Test()
-{
-	UE_LOG(LogAbilitySystemComponent,Warning,TEXT("Wait Task Test"));
-}

@@ -38,8 +38,4 @@ protected:
 		bool bReplicateEndAbility, 
 		bool bWasCancelled
 	) override;
-
-private:
-	UFUNCTION()
-	void Test();
 };
