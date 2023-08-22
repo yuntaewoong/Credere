@@ -106,6 +106,7 @@ void ABasePlayableCharacter::BeginPlay()
 		FGameplayAbilitySpec autoAttackAbilitySpec(UGameplayAbility_AutoAttack::StaticClass(),1);
 		AutoAttackAbilitySpecHandle =  AbilitySystemComponent->GiveAbility(autoAttackAbilitySpec);//자동공격 능력 부여
 		AbilitySystemComponent->TryActivateAbility(AutoAttackAbilitySpecHandle);
+
 	}
 	
 	if (UGameInstance* gameInstance = UGameplayStatics::GetGameInstance(this))

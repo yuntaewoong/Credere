@@ -44,9 +44,6 @@ private:
 
 	void Attack();
 private:
-	FGameplayAbilitySpecHandle AbilitySpecHandle;
-	const FGameplayAbilityActorInfo* AbilityActorInfo;
-	FGameplayAbilityActivationInfo AbilityActivationInfo;
 	TSubclassOf<UGameplayEffect> GE_DamageBPClass;
 
 	UPROPERTY(VisibleAnywhere)
@@ -55,4 +52,5 @@ private:
 	TObjectPtr<class UAbilityTask_Repeat> RepeatAbilityTask;
 	float AutoAttackInterval;
 	FDateTime LastAttackTime;
+
 };

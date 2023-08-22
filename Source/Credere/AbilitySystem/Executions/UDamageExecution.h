@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameplayEffectExecutionCalculation.h"
 #include "UDamageExecution.generated.h"
-
+DECLARE_LOG_CATEGORY_EXTERN(LogExecution, Log, All);
 /**
  * 
  */

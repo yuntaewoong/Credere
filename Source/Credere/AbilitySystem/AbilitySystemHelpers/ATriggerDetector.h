@@ -16,7 +16,7 @@ class CREDERE_API ATriggerDetector : public AActor
 public:	
 	ATriggerDetector();
 	
-	TObjectPtr<const AActor> GetOverlappedOpponent() const;
+	TObjectPtr<AActor> GetOverlappedOpponent() const;
 protected:
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
@@ -26,7 +26,7 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class USphereComponent> SphereComponent;
 
-	TObjectPtr<const AActor> OverlappedActor;
+	TObjectPtr<AActor> OverlappedActor;
 
 	float DetectingRadius;
 };

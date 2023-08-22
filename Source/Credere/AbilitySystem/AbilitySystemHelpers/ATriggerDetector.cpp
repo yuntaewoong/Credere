@@ -22,7 +22,7 @@ ATriggerDetector::ATriggerDetector()
 	SphereComponent->SetSphereRadius(DetectingRadius);
 }
 
-TObjectPtr<const AActor> ATriggerDetector::GetOverlappedOpponent() const
+TObjectPtr<AActor> ATriggerDetector::GetOverlappedOpponent() const
 {
 	return OverlappedActor;
 }

@@ -2,6 +2,8 @@
 
 
 #include "UDamageExecution.h"
+#include "AbilitySystem\Attributes\UHealthAttributeSet.h"
+DEFINE_LOG_CATEGORY(LogExecution);
 
 UDamageExecution::UDamageExecution()
 	:
@@ -11,4 +13,5 @@ UDamageExecution::UDamageExecution()
 
 void UDamageExecution::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
+	UE_LOG(LogExecution,Warning,TEXT("Execute Called"));
 }

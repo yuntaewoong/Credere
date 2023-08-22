@@ -8,17 +8,14 @@
 UGameplayAbility_AutoAttack::UGameplayAbility_AutoAttack()
 	:
 	Super::UBaseGameplayAbility(),
-	AbilitySpecHandle(),
-	AbilityActorInfo(nullptr),
-	AbilityActivationInfo(),
 	GE_DamageBPClass(nullptr),
 	TriggerDetector(nullptr),
 	RepeatAbilityTask(nullptr),
 	AutoAttackInterval(5.0f),
 	LastAttackTime(0)
 {
-	static ConstructorHelpers::FClassFinder<UGameplayEffect> damageGE(TEXT("Blueprint'/Game/Blueprints/GameplayEffectBlueprints/GE_DamageInstant.GE_DamageInstant'"));
-	if(!damageGE.Succeeded())
+	static ConstructorHelpers::FClassFinder<UGameplayEffect> damageGE(TEXT("Blueprint'/Game/Blueprints/GameplayEffectBlueprints/GE_DamageInstant.GE_DamageInstant_C'"));
+	if(!damageGE.Succeeded() || !damageGE.Class )
 		UE_LOG(LogGameplayAbility,Warning,TEXT("Can not find GE_Damage Class"));
 	GE_DamageBPClass = damageGE.Class;
 }
@@ -41,9 +38,6 @@ void UGameplayAbility_AutoAttack::ActivateAbility(
 	const FGameplayEventData* TriggerEventData
 )
 {
-	AbilitySpecHandle = Handle;
-	AbilityActorInfo = ActorInfo;
-	AbilityActivationInfo = ActivationInfo;
 	if(!TriggerDetector)
 	{//Trigger Detector 스폰, 위치 업데이트를 위해 어빌리티 소유자에게 Attach
 		FVector spawnLocation = FVector::ZeroVector;
@@ -82,19 +76,22 @@ void UGameplayAbility_AutoAttack::AttackRepeat(int32 ActionNumber)
 
 void UGameplayAbility_AutoAttack::Attack()
 {
+	AActor* targetActor = TriggerDetector->GetOverlappedOpponent();
+	if(!targetActor)
+		return;//TriggerDetector에 감지된 상대방이 없으면 공격 x
 	LastAttackTime = FDateTime::Now();
-	/*FGameplayAbilityTargetData targetData;
-	FGameplayAbilityTargetDataHandle targetDataHandle;
-	FGameplayAbilitySpec gameplayAbilitySpec;
-	targetDataHandle.Add(&targetData);
-	ApplyGameplayEffectToTarget(
-		AbilitySpecHandle,
-		AbilityActorInfo,
-		AbilityActivationInfo,
-		targetDataHandle,
-		GE_DamageBPClass,
-		1
-	);*/
-	
-	UE_LOG(LogGameplayAbility,Warning,TEXT("Attack to Opponent"));
+	{//TargetData생성후 GE적용, new로 생성한 TargetData는 TargetDataHandle의 TSharedPtr로 관리되기에 메모리 누수가 일어나지 않음
+		FGameplayAbilityTargetDataHandle targetDataHandle;
+		FGameplayAbilityTargetData_ActorArray* pTargetData = new FGameplayAbilityTargetData_ActorArray();
+		pTargetData->TargetActorArray.Add(targetActor);
+		targetDataHandle.Add(pTargetData);
+		ApplyGameplayEffectToTarget(
+			CurrentSpecHandle, 
+			CurrentActorInfo,
+			CurrentActivationInfo,
+			targetDataHandle, 
+			GE_DamageBPClass,
+			1
+		);
+	}
 }
