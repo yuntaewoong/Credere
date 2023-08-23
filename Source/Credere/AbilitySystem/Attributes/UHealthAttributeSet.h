@@ -21,9 +21,9 @@ public:
 	ATTRIBUTE_ACCESSORS(UHealthAttributeSet, MaxHealth);
 private:
 	
-	UPROPERTY(VisibleAnywhere, Meta = (HideFromModifiers, AllowPrivateAccess = true))
+	UPROPERTY()
 	FGameplayAttributeData Health;
 
-	UPROPERTY(VisibleAnywhere, Meta = (AllowPrivateAccess = true))
+	UPROPERTY()
 	FGameplayAttributeData MaxHealth;
 };

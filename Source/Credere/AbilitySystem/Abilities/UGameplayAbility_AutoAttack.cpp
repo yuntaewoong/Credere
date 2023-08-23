@@ -4,6 +4,7 @@
 #include "UGameplayAbility_AutoAttack.h"
 #include "AbilitySystem\AbilitySystemHelpers\ATriggerDetector.h"
 #include "Abilities/Tasks/AbilityTask_Repeat.h"
+#include "PlayableCharacter/ABasePlayableCharacter.h"
 
 UGameplayAbility_AutoAttack::UGameplayAbility_AutoAttack()
 	:
@@ -93,5 +94,16 @@ void UGameplayAbility_AutoAttack::Attack()
 			GE_DamageBPClass,
 			1
 		);
+	}
+	{//플레이어 공격 몽타주 재생
+		ABasePlayableCharacter* playerCharacter =  Cast<ABasePlayableCharacter>(CurrentActorInfo->AvatarActor);
+		if(playerCharacter)
+		{
+			UAnimInstance* playerAnimInstance = CurrentActorInfo->GetAnimInstance();
+			if(playerAnimInstance)
+			{
+				playerAnimInstance->Montage_Play(playerCharacter->GetAttack1AnimMontage());
+			}
+		}
 	}
 }

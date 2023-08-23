@@ -55,26 +55,26 @@ void ACredereGameModeBase::BeginPlay()
 			FVector actorLeftVector = defaultWarriorCharacter->GetActorRightVector() * (-1);
 			FVector actorRightVector = defaultWarriorCharacter->GetActorRightVector();
 			FVector actorForwardVector = defaultWarriorCharacter->GetActorForwardVector();
-			//{//궁수 스폰 & AI컨트롤러 빙의
-			//	AArcherCharacter* archerCharacter = GetWorld()->SpawnActor<AArcherCharacter>(
-			//		defaultWarriorCharacter->GetActorLocation() + actorLeftVector * spawnDistanceBetweenCharacters,
-			//		defaultWarriorCharacter->GetActorRotation()
-			//	);
-			//	archerCharacter->AttachToActor(playableCharacterBase,FAttachmentTransformRules::KeepWorldTransform);
-			//	APartnerAIController* partnerAIController = GetWorld()->SpawnActor<APartnerAIController>();
-			//	partnerAIController->Possess(archerCharacter);
-			//	partnerAIController->AttachToActor(aiControllerBase,FAttachmentTransformRules::KeepWorldTransform);
-			//}
-			//{//배틀메이지 스폰 & AI컨트롤러 빙의
-			//	ABattleMageCharacter* battleMageCharacter = GetWorld()->SpawnActor<ABattleMageCharacter>(
-			//		defaultWarriorCharacter->GetActorLocation() + actorRightVector * spawnDistanceBetweenCharacters,
-			//		defaultWarriorCharacter->GetActorRotation()
-			//	);
-			//	battleMageCharacter->AttachToActor(playableCharacterBase,FAttachmentTransformRules::KeepWorldTransform);
-			//	APartnerAIController* partnerAIController = GetWorld()->SpawnActor<APartnerAIController>();
-			//	partnerAIController->Possess(battleMageCharacter);
-			//	partnerAIController->AttachToActor(aiControllerBase,FAttachmentTransformRules::KeepWorldTransform);
-			//}
+			{//궁수 스폰 & AI컨트롤러 빙의
+				AArcherCharacter* archerCharacter = GetWorld()->SpawnActor<AArcherCharacter>(
+					defaultWarriorCharacter->GetActorLocation() + actorLeftVector * spawnDistanceBetweenCharacters,
+					defaultWarriorCharacter->GetActorRotation()
+				);
+				archerCharacter->AttachToActor(playableCharacterBase,FAttachmentTransformRules::KeepWorldTransform);
+				APartnerAIController* partnerAIController = GetWorld()->SpawnActor<APartnerAIController>();
+				partnerAIController->Possess(archerCharacter);
+				partnerAIController->AttachToActor(aiControllerBase,FAttachmentTransformRules::KeepWorldTransform);
+			}
+			{//배틀메이지 스폰 & AI컨트롤러 빙의
+				ABattleMageCharacter* battleMageCharacter = GetWorld()->SpawnActor<ABattleMageCharacter>(
+					defaultWarriorCharacter->GetActorLocation() + actorRightVector * spawnDistanceBetweenCharacters,
+					defaultWarriorCharacter->GetActorRotation()
+				);
+				battleMageCharacter->AttachToActor(playableCharacterBase,FAttachmentTransformRules::KeepWorldTransform);
+				APartnerAIController* partnerAIController = GetWorld()->SpawnActor<APartnerAIController>();
+				partnerAIController->Possess(battleMageCharacter);
+				partnerAIController->AttachToActor(aiControllerBase,FAttachmentTransformRules::KeepWorldTransform);
+			}
 			{//적 스폰 & AI컨트롤러 빙의
 				ADualBladeEnemyCharacter* dualBladeEnemyCharacter = GetWorld()->SpawnActor<ADualBladeEnemyCharacter>(
 					defaultWarriorCharacter->GetActorLocation() + actorForwardVector * spawnDistanceBetweenCharacters,

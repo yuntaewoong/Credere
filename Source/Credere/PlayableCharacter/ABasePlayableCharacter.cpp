@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "AbilitySystem\Abilities\UGameplayAbility_Jump.h"
 #include "AbilitySystem\Abilities\UGameplayAbility_AutoAttack.h"
+#include "AbilitySystem\Attributes\UHealthAttributeSet.h"
 #include "AbilitySystem\UCredereAbilitySystemComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -27,6 +28,7 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	JumpAction(nullptr),
 	MoveAction(nullptr),
 	LookAction(nullptr),
+	Attack1AnimMontage(nullptr),
 	JumpAbilitySpecHandle(),
 	AutoAttackAbilitySpecHandle()
 {
@@ -75,6 +77,10 @@ ABasePlayableCharacter::ABasePlayableCharacter()
 	}
 	{//Ability System설정
 		AbilitySystemComponent = CreateDefaultSubobject<UCredereAbilitySystemComponent>(TEXT("Ability System"));
+		UHealthAttributeSet* healthAttribute = CreateDefaultSubobject<UHealthAttributeSet>("Health Attribute Set");
+		healthAttribute->InitHealth(50.f);
+		healthAttribute->InitMaxHealth(100.f);
+
 	}
 	{//CameraBoom설정
 		CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -100,12 +106,14 @@ void ABasePlayableCharacter::BeginPlay()
 		Navigation->AttachToActor(this,FAttachmentTransformRules::KeepRelativeTransform);
 	}
 	{//ASC
+		FGameplayEffectSpec initGameplayEffectSpec;
+
 		FGameplayAbilitySpec jumpAbilitySpec(UGameplayAbility_Jump::StaticClass(),1);
 		JumpAbilitySpecHandle =  AbilitySystemComponent->GiveAbility(jumpAbilitySpec);//점프 능력 부여
 
 		FGameplayAbilitySpec autoAttackAbilitySpec(UGameplayAbility_AutoAttack::StaticClass(),1);
 		AutoAttackAbilitySpecHandle =  AbilitySystemComponent->GiveAbility(autoAttackAbilitySpec);//자동공격 능력 부여
-		AbilitySystemComponent->TryActivateAbility(AutoAttackAbilitySpecHandle);
+		AbilitySystemComponent->TryActivateAbility(AutoAttackAbilitySpecHandle);//자동공격 활성화
 
 	}
 	
@@ -171,6 +179,16 @@ void ABasePlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 	enhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ABasePlayableCharacter::StopAbilityJumping);
 	enhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABasePlayableCharacter::Move);
 	enhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABasePlayableCharacter::Look);
+}
+
+TObjectPtr<class UAnimMontage> ABasePlayableCharacter::GetAttack1AnimMontage() const
+{
+	return Attack1AnimMontage;
+}
+
+void ABasePlayableCharacter::SetAttack1AnimMontage(TObjectPtr<class UAnimMontage> AnimMontage)
+{
+	Attack1AnimMontage = AnimMontage;
 }
 
 

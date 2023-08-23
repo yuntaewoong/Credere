@@ -20,7 +20,9 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+	TObjectPtr<class UAnimMontage> GetAttack1AnimMontage() const;
+protected:
+	void SetAttack1AnimMontage(TObjectPtr<class UAnimMontage> AnimMontage);
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
@@ -51,6 +53,11 @@ private:
 	UPROPERTY()
 	TObjectPtr<class UInputAction> LookAction;
 
+	UPROPERTY()
+	TObjectPtr<class UAnimMontage> Attack1AnimMontage;
+	
 	FGameplayAbilitySpecHandle JumpAbilitySpecHandle;
 	FGameplayAbilitySpecHandle AutoAttackAbilitySpecHandle;
+
+
 };

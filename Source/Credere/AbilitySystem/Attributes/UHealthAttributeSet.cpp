@@ -5,6 +5,8 @@
 
 UHealthAttributeSet::UHealthAttributeSet()
 	:
-	Super::UBaseAttributeSet()
+	Super::UBaseAttributeSet(),
+	Health(0.f),
+	MaxHealth(0.f)
 {
 }

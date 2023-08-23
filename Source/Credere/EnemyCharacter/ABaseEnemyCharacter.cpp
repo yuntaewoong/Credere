@@ -2,6 +2,7 @@
 
 
 #include "EnemyCharacter/ABaseEnemyCharacter.h"
+#include "AbilitySystem\Attributes\UHealthAttributeSet.h"
 #include "AbilitySystem\UCredereAbilitySystemComponent.h"
 
 // Sets default values
@@ -13,6 +14,9 @@ ABaseEnemyCharacter::ABaseEnemyCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	{//Ability System설정
 		AbilitySystemComponent = CreateDefaultSubobject<UCredereAbilitySystemComponent>(TEXT("Ability System"));
+		UHealthAttributeSet* healthAttribute = CreateDefaultSubobject<UHealthAttributeSet>("Health Attribute Set");
+		healthAttribute->InitHealth(30.f);
+		healthAttribute->InitMaxHealth(50.f);
 	}
 }
 
