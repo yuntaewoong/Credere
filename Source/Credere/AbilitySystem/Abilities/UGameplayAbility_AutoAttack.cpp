@@ -5,6 +5,7 @@
 #include "AbilitySystem\AbilitySystemHelpers\ATriggerDetector.h"
 #include "Abilities/Tasks/AbilityTask_Repeat.h"
 #include "PlayableCharacter/ABasePlayableCharacter.h"
+#include "Kismet/KismetMathLibrary.h"
 
 UGameplayAbility_AutoAttack::UGameplayAbility_AutoAttack()
 	:
@@ -81,29 +82,51 @@ void UGameplayAbility_AutoAttack::Attack()
 	if(!targetActor)
 		return;//TriggerDetector에 감지된 상대방이 없으면 공격 x
 	LastAttackTime = FDateTime::Now();
-	{//TargetData생성후 GE적용, new로 생성한 TargetData는 TargetDataHandle의 TSharedPtr로 관리되기에 메모리 누수가 일어나지 않음
-		FGameplayAbilityTargetDataHandle targetDataHandle;
-		FGameplayAbilityTargetData_ActorArray* pTargetData = new FGameplayAbilityTargetData_ActorArray();
-		pTargetData->TargetActorArray.Add(targetActor);
-		targetDataHandle.Add(pTargetData);
-		ApplyGameplayEffectToTarget(
-			CurrentSpecHandle, 
-			CurrentActorInfo,
-			CurrentActivationInfo,
-			targetDataHandle, 
-			GE_DamageBPClass,
-			1
+	ApplyDamageGameplayEffectToOpponent(targetActor);
+	RotatePlayerToOpponent(targetActor);
+	PlayAttack1Montage();
+}
+
+void UGameplayAbility_AutoAttack::ApplyDamageGameplayEffectToOpponent(AActor* OverlappedOpponent)
+{//TargetData생성후 GE적용, new로 생성한 TargetData는 TargetDataHandle의 TSharedPtr로 관리되기에 메모리 누수가 일어나지 않음
+	FGameplayAbilityTargetDataHandle targetDataHandle;
+	FGameplayAbilityTargetData_ActorArray* pTargetData = new FGameplayAbilityTargetData_ActorArray();
+	pTargetData->TargetActorArray.Add(OverlappedOpponent);
+	targetDataHandle.Add(pTargetData);
+	ApplyGameplayEffectToTarget(
+		CurrentSpecHandle, 
+		CurrentActorInfo,
+		CurrentActivationInfo,
+		targetDataHandle, 
+		GE_DamageBPClass,
+		1
+	);
+}
+
+void UGameplayAbility_AutoAttack::RotatePlayerToOpponent(const AActor* OverlappedOpponent) const
+{//적을 향하도록 플레이어 회전(Yaw값만)
+	ABasePlayableCharacter* playerCharacter =  Cast<ABasePlayableCharacter>(CurrentActorInfo->AvatarActor);
+	if(playerCharacter)
+	{
+		FRotator enemyLookingRotator = UKismetMathLibrary::FindLookAtRotation(
+			playerCharacter->GetActorLocation(),
+			OverlappedOpponent->GetActorLocation()
 		);
+		enemyLookingRotator.Roll = 0.0;
+		enemyLookingRotator.Pitch = 0.0;
+		playerCharacter->SetActorRotation(FQuat::MakeFromRotator(enemyLookingRotator));
 	}
-	{//플레이어 공격 몽타주 재생
-		ABasePlayableCharacter* playerCharacter =  Cast<ABasePlayableCharacter>(CurrentActorInfo->AvatarActor);
-		if(playerCharacter)
+}
+
+void UGameplayAbility_AutoAttack::PlayAttack1Montage() const
+{//플레이어 공격 몽타주 재생
+	ABasePlayableCharacter* playerCharacter =  Cast<ABasePlayableCharacter>(CurrentActorInfo->AvatarActor);
+	if(playerCharacter)
+	{
+		UAnimInstance* playerAnimInstance = CurrentActorInfo->GetAnimInstance();
+		if(playerAnimInstance)
 		{
-			UAnimInstance* playerAnimInstance = CurrentActorInfo->GetAnimInstance();
-			if(playerAnimInstance)
-			{
-				playerAnimInstance->Montage_Play(playerCharacter->GetAttack1AnimMontage());
-			}
+			playerAnimInstance->Montage_Play(playerCharacter->GetAttack1AnimMontage());
 		}
 	}
 }

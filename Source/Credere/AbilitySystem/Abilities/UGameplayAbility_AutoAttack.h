@@ -43,6 +43,9 @@ private:
 	void AttackRepeat(int32 ActionNumber);
 
 	void Attack();
+	void ApplyDamageGameplayEffectToOpponent(AActor* OverlappedOpponent);
+	void RotatePlayerToOpponent(const AActor* OverlappedOpponent) const;
+	void PlayAttack1Montage() const;
 private:
 	TSubclassOf<UGameplayEffect> GE_DamageBPClass;
 
