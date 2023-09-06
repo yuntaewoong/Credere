@@ -10,7 +10,7 @@
 
 1. 프로젝트 클론 or 다운로드(Git LFS Bandwidth초과로 clone이 불가능 할 경우 다운로드 링크 이용부탁드립니다)
 ```
-git clone https://github.com/yuntaewoong/DirectX12_DXR_Renderer.git
+git clone --depth 1 https://github.com/yuntaewoong/DirectX12_DXR_Renderer.git
 ```
 [다운로드 링크(15.62GB)](https://15ywt.synology.me/sharing/qi4bVQLF3)  
 
@@ -40,7 +40,26 @@ git clone https://github.com/yuntaewoong/DirectX12_DXR_Renderer.git
 
 # 주요 기능
 ## Navigation
-## 조작 캐릭터 전환
-## Gameplay Ability System
+(네비게이션 실시간 반영 움짤)   
+구현 방법: 언리얼 엔진의 `UNavigationSystemV1`기능을 이용해서 구현.  
+NavMesh를 비실시간 빌드한 후에 `UNavigationSystemV1`으로부터 시작점,종착점까지의 경로 Point배열을 얻어온 후에 Spline Mesh들로 경로를 시각화 한다.
 
+ 
+## 조작 캐릭터 전환
+(계속 움직이면서 캐릭터 조작 변경하는 움짤)  
+
+구현 방법: 게임 시작 시 플레이어 조작을 반영하는 `AHumanPlayerController` 1개와  
+동료 캐릭터 수만큼의 `APartnerAIController`를 스폰.  
+게임인스턴스 서브시스템을 상속받는 `UPlayableCharacterSubsystem`에서 현재 조작할 수 있는 캐릭터 배열, 조작하고 있는 캐릭터를 관리하도록 구현.  
+플레이어가 `q`,`e`인풋을 주면 `UPlayableCharacterSubsystem` 멤버함수를 호출해서 현재 AIController가 조작중인 동료 캐릭터를 possess하고 현재 캐릭터는 남는 AI Controller가 possess하는 로직 실행   
+
+## Gameplay Ability System
+(Health 디버깅하면서 자동공격하는 움짤)  
+자동공격 Ability 구현 방법: 
+1. AutoAttack GameplayAbility 클래스 생성
+2. Health Attribute Set 클래스 생성
+3. 캐릭터,적 base클래스에 AbilitySystemComponent 서브 오브젝트 생성 + Health Attribute Set 서브오브젝트 생성  
+4. AutoAttack GameplayAbility의 ActivateAbility함수 구현(UAbilityTask_Repeat를 이용해서 반복 공격 구현)
+5. ActivateAbility함수에서 사용할 GameplayEffect 블루프린트 생성
+6. 자동공격함수 호출할때마다 ApplyGameplayEffectToTarget 함수로 GameplayEffect효과 발동
 
