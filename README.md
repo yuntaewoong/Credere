@@ -10,7 +10,7 @@
 
 1. 프로젝트 클론 or 다운로드(Git LFS Bandwidth초과로 clone이 불가능 할 경우 다운로드 링크 이용부탁드립니다)
 ```
-git clone --depth 1 https://github.com/yuntaewoong/DirectX12_DXR_Renderer.git
+git clone --depth 1 https://github.com/yuntaewoong/Credere.git
 ```
 [다운로드 링크(15.62GB)](https://15ywt.synology.me/sharing/qi4bVQLF3)  
 
